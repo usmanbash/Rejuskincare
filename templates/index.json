@@ -6,84 +6,9 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
-      "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-secondary",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
-      ],
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-6",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
-      }
-    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -257,6 +182,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "Featured collection",
       "settings": {
         "collection": "all",
@@ -277,10 +203,269 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "ctas_QagKBe": {
+      "type": "ctas",
+      "blocks": {
+        "logo_wqrAew": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/good-housekeepin-logo.webp",
+            "link": ""
+          }
+        },
+        "logo_WDQG3N": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/good-housekeepin-logo.webp",
+            "link": ""
+          }
+        },
+        "logo_PwRcHr": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/good-housekeepin-logo.webp",
+            "link": ""
+          }
+        },
+        "logo_R4UM7J": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/good-housekeepin-logo.webp",
+            "link": ""
+          }
+        },
+        "logo_qH7QT8": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/good-housekeepin-logo.webp",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_wqrAew",
+        "logo_WDQG3N",
+        "logo_PwRcHr",
+        "logo_R4UM7J",
+        "logo_qH7QT8"
+      ],
+      "name": "Section cta",
+      "settings": {
+        "heading": "As Seen in",
+        "enable_desktop_slider": true,
+        "slides_desktop": 5,
+        "slides_mobile": 2
+      }
+    },
+    "ctas_image_BcxFC8": {
+      "type": "ctas-image",
+      "blocks": {
+        "review_pQwrpV": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/5_218d5f63-806b-42a7-9602-20afd51f607d.webp",
+            "review_title": "Amazing Product!",
+            "review_text": "This product has changed my life!",
+            "star_rating": "shopify://shop_images/Star_Rating.png",
+            "reviewer_name": "Jessica B."
+          }
+        },
+        "review_GH8yL9": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/9_81739886-b1e4-45d1-bd20-337a5fe6ca10.webp",
+            "review_title": "My Secret Weapon Between Salon Visits!",
+            "review_text": "This product has changed my life!",
+            "star_rating": "shopify://shop_images/Star_Rating.png",
+            "reviewer_name": "Jessica B."
+          }
+        },
+        "review_4MiDAM": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/5_218d5f63-806b-42a7-9602-20afd51f607d.webp",
+            "review_title": "Amazing Product!",
+            "review_text": "This product has changed my life!",
+            "star_rating": "shopify://shop_images/Star_Rating.png",
+            "reviewer_name": "Jessica B."
+          }
+        }
+      },
+      "block_order": [
+        "review_pQwrpV",
+        "review_GH8yL9",
+        "review_4MiDAM"
+      ],
+      "name": "Customer Reviews Image",
+      "settings": {
+        "rating_heading": "Customer Reviews",
+        "main_heading": "HairMagic+ Transformations",
+        "slides_desktop": 3,
+        "slides_tablet": 2,
+        "slides_mobile": 1
+      }
+    },
+    "5_reasons_AP3wHk": {
+      "type": "5-reasons",
+      "blocks": {
+        "reason_hBtYAH": {
+          "type": "reason",
+          "settings": {
+            "title": "Reason Title",
+            "content": "<p>Reason description goes here.</p>"
+          }
+        },
+        "reason_qFKNDk": {
+          "type": "reason",
+          "settings": {
+            "title": "Reason Title",
+            "content": "<p>Reason description goes here.</p>"
+          }
+        },
+        "reason_p39TiD": {
+          "type": "reason",
+          "settings": {
+            "title": "Reason Title",
+            "content": "<p>Reason description goes here.</p>"
+          }
+        },
+        "reason_HVQwMJ": {
+          "type": "reason",
+          "settings": {
+            "title": "Reason Title",
+            "content": "<p>Reason description goes here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "reason_hBtYAH",
+        "reason_qFKNDk",
+        "reason_p39TiD",
+        "reason_HVQwMJ"
+      ],
+      "name": "5 Reasons",
+      "settings": {
+        "heading_part1": "5 Reasons",
+        "heading_part2": "Why Mature Women Love HairMagic+",
+        "image": "shopify://shop_images/2_660c00bf-77d9-449e-9b44-7376443892c7.webp"
+      }
+    },
+    "info_section_mjKHi7": {
+      "type": "info-section",
+      "blocks": {
+        "list_item_iPMYEf": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shopify://shop_images/checked.png",
+            "text": "Designed for mature hair and sensitive scalps"
+          }
+        },
+        "list_item_KHdUHE": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shopify://shop_images/checked.png",
+            "text": "Designed for mature hair and sensitive scalps"
+          }
+        },
+        "list_item_EiJpzD": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shopify://shop_images/checked.png",
+            "text": "Designed for mature hair and sensitive scalps"
+          }
+        },
+        "list_item_Ggmiic": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shopify://shop_images/checked.png",
+            "text": "Designed for mature hair and sensitive scalps"
+          }
+        },
+        "list_item_yUdLdi": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shopify://shop_images/checked.png",
+            "text": "Designed for mature hair and sensitive scalps"
+          }
+        }
+      },
+      "block_order": [
+        "list_item_iPMYEf",
+        "list_item_KHdUHE",
+        "list_item_EiJpzD",
+        "list_item_Ggmiic",
+        "list_item_yUdLdi"
+      ],
+      "name": "Info Section",
+      "settings": {
+        "desktop_image": "shopify://shop_images/1_f25beac7-0620-4d66-929c-0906ece13969.webp",
+        "heading": "Your Secret Weapon for Confidence in Every Strand",
+        "content_text": "HairMagic+ wasn't just created to cover greys or stretch salon visits. It was designed to give you back control, comfort, and confidence—in just 2 minutes a day.\n\nEvery detail—from the nourishing ingredients to the undetectable finish—was carefully crafted to meet the real needs of women experiencing greys, thinning, or root regrowth. No harsh sprays. No itchy powders. No obvious patches. Just naturally fuller-looking hair that feels like you again.",
+        "list_title": "What makes HairMagic+ your go-to solution:"
+      }
+    },
+    "info_section_fUD7W8": {
+      "type": "info-section",
+      "blocks": {
+        "list_item_TPVUm9": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shopify://shop_images/checked.png",
+            "text": "Designed for mature hair and sensitive scalps"
+          }
+        },
+        "list_item_WHcVce": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shopify://shop_images/checked.png",
+            "text": "Designed for mature hair and sensitive scalps"
+          }
+        },
+        "list_item_MPpVkC": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shopify://shop_images/checked.png",
+            "text": "Designed for mature hair and sensitive scalps"
+          }
+        },
+        "list_item_hFLDBU": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shopify://shop_images/checked.png",
+            "text": "Designed for mature hair and sensitive scalps"
+          }
+        },
+        "list_item_cETiwc": {
+          "type": "list_item",
+          "settings": {
+            "icon": "shopify://shop_images/checked.png",
+            "text": "Designed for mature hair and sensitive scalps"
+          }
+        }
+      },
+      "block_order": [
+        "list_item_TPVUm9",
+        "list_item_WHcVce",
+        "list_item_MPpVkC",
+        "list_item_hFLDBU",
+        "list_item_cETiwc"
+      ],
+      "name": "Info Section",
+      "settings": {
+        "desktop_image": "shopify://shop_images/3_be50c950-8fe3-4563-b9d4-1933c7ddc859.webp",
+        "heading": "“It Does What It Says Or Your Money Back”.  <span style=\"color: #744682;\">GURANTEE</span>",
+        "content_text": "HairMagic+ wasn't just created to cover greys or stretch salon visits. It was designed to give you back control, comfort, and confidence—in just 2 minutes a day.\n\nEvery detail—from the nourishing ingredients to the undetectable finish—was carefully crafted to meet the real needs of women experiencing greys, thinning, or root regrowth. No harsh sprays. No itchy powders. No obvious patches. Just naturally fuller-looking hair that feels like you again.",
+        "list_title": "What makes HairMagic+ your go-to solution:"
+      }
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "product_list_fa6P9H",
+    "ctas_QagKBe",
+    "ctas_image_BcxFC8",
+    "5_reasons_AP3wHk",
+    "info_section_mjKHi7",
+    "info_section_fUD7W8"
   ]
 }
