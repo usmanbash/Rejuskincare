@@ -1,0 +1,560 @@
+{% comment %}
+  Dynamic Comparison Table Section
+  Creates a comparison table exactly like the screenshot with dynamic content
+{% endcomment %}
+
+{%- assign table_title = section.settings.title | default: "What Makes REJU Best For You" -%}
+
+<div class="comparison-table-section">
+  <div class="comparison-table-container">
+    
+    <!-- Title -->
+    <div class="comparison-table-title">
+      <h2>{{ table_title }}</h2>
+    </div>
+
+    <!-- Dynamic Comparison Table -->
+    <div class="comparison-table-wrapper">
+      <table class="comparison-table">
+        
+        <!-- Table Header -->
+        <thead>
+          <tr>
+            <th></th>
+            <th class="column-1">
+              {%- if section.settings.column_1_logo -%}
+                <div class="column-logo">
+                  <img src="{{ section.settings.column_1_logo | img_url: '118x' }}" alt="{{ section.settings.column_1_name }}">
+                </div>
+              {%- endif -%}
+              <div class="column-name column-1">
+                {{ section.settings.column_1_name }}
+              </div>
+            </th>
+            <th class="column-2">
+              {%- if section.settings.column_2_logo -%}
+                <div class="column-logo">
+                  <img src="{{ section.settings.column_2_logo | img_url: '118x' }}" alt="{{ section.settings.column_2_name }}">
+                </div>
+              {%- endif -%}
+              <div class="column-name column-2">
+                {{ section.settings.column_2_name | default: "EYE CREAMS" }}
+              </div>
+            </th>
+            <th class="column-3">
+              {%- if section.settings.column_3_logo -%}
+                <div class="column-logo">
+                  <img src="{{ section.settings.column_3_logo | img_url: '118x' }}" alt="{{ section.settings.column_3_name }}">
+                </div>
+              {%- endif -%}
+              <div class="column-name column-3">
+                {{ section.settings.column_3_name | default: "CONCEALERS" }}
+              </div>
+            </th>
+          </tr>
+        </thead>
+
+        <!-- Table Body -->
+        <tbody>
+          {%- for i in (1..8) -%}
+            {%- assign feature_name = 'feature_' | append: i | append: '_name' -%}
+            {%- assign feature_col1 = 'feature_' | append: i | append: '_column_1' -%}
+            {%- assign feature_col2 = 'feature_' | append: i | append: '_column_2' -%}
+            {%- assign feature_col3 = 'feature_' | append: i | append: '_column_3' -%}
+            
+            {%- if section.settings[feature_name] != blank -%}
+              <tr>
+                <td>
+                  <div class="feature-text">
+                    {{ section.settings[feature_name] }}
+                  </div>
+                </td>
+                <td class="column-1">
+                  {%- assign comparison_value = section.settings[feature_col1] | default: 'check' -%}
+                  {%- case comparison_value -%}
+                    {%- when 'check' -%}
+                      <div class="comparison-icon check">
+                        <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                          <path d="M1 6L5.5 10.5L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                    {%- when 'cross' -%}
+                      <div class="comparison-icon cross">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                          <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                    {%- when 'question' -%}
+                      <div class="comparison-icon question">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 29 29" height="29" width="29">
+                        <path fill="white" d="M14.4066 0.519653C6.676 0.519653 0.406616 6.78901 0.406616 14.5197C0.406616 22.2503 6.676 28.5197 14.4066 28.5197C22.1372 28.5197 28.4066 22.2503 28.4066 14.5197C28.4066 6.78901 22.1372 0.519653 14.4066 0.519653ZM14.3279 23.0596C13.5535 23.0596 12.9279 22.434 12.9279 21.6597C12.9279 20.8897 13.5535 20.264 14.3279 20.264C15.0979 20.264 15.7235 20.8897 15.7235 21.6597C15.7235 22.434 15.0979 23.0596 14.3279 23.0596ZM17.0448 14.6203C16.0779 15.469 15.6316 16.2303 15.6316 17.0134C15.6316 17.7309 15.0454 18.3171 14.3279 18.3171C13.606 18.3171 13.0241 17.7309 13.0241 17.0134C13.0241 15.4471 13.7766 14.0253 15.321 12.6647C16.6991 11.4528 16.8741 10.6871 16.7122 9.91277C16.5547 9.14276 15.5835 8.58715 14.4066 8.58715C14.3235 8.58715 12.3722 8.60464 12.0179 10.1709C11.8604 10.8709 11.1648 11.3172 10.4604 11.1509C9.76037 10.9934 9.31849 10.2978 9.47598 9.5934C10.1235 6.74089 12.8797 5.97964 14.4066 5.97964C16.8523 5.97964 18.8516 7.37965 19.2672 9.38341C19.7791 11.8728 18.2435 13.5659 17.0448 14.6203Z"/>
+                        </svg>
+                      </div>
+                    {%- else -%}
+                      <div class="comparison-icon none">
+                        <span>—</span>
+                      </div>
+                  {%- endcase -%}
+                </td>
+                <td class="column-2">
+                  {%- assign comparison_value = section.settings[feature_col2] | default: 'cross' -%}
+                  {%- case comparison_value -%}
+                    {%- when 'check' -%}
+                      <div class="comparison-icon check">
+                        <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                          <path d="M1 6L5.5 10.5L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                    {%- when 'cross' -%}
+                      <div class="comparison-icon cross">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                          <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                    {%- when 'question' -%}
+                      <div class="comparison-icon question">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 29 29" height="29" width="29">
+                          <circle cx="14.5" cy="14.5" r="14" fill="black"/>
+                          <path fill="white" d="M14.3279 23.0596C13.5535 23.0596 12.9279 22.434 12.9279 21.6597C12.9279 20.8897 13.5535 20.264 14.3279 20.264C15.0979 20.264 15.7235 20.8897 15.7235 21.6597C15.7235 22.434 15.0979 23.0596 14.3279 23.0596ZM17.0448 14.6203C16.0779 15.469 15.6316 16.2303 15.6316 17.0134C15.6316 17.7309 15.0454 18.3171 14.3279 18.3171C13.606 18.3171 13.0241 17.7309 13.0241 17.0134C13.0241 15.4471 13.7766 14.0253 15.321 12.6647C16.6991 11.4528 16.8741 10.6871 16.7122 9.91277C16.5547 9.14276 15.5835 8.58715 14.4066 8.58715C14.3235 8.58715 12.3722 8.60464 12.0179 10.1709C11.8604 10.8709 11.1648 11.3172 10.4604 11.1509C9.76037 10.9934 9.31849 10.2978 9.47598 9.5934C10.1235 6.74089 12.8797 5.97964 14.4066 5.97964C16.8523 5.97964 18.8516 7.37965 19.2672 9.38341C19.7791 11.8728 18.2435 13.5659 17.0448 14.6203Z"/>
+                        </svg>
+                      </div>
+                    {%- else -%}
+                      <div class="comparison-icon none">
+                        <span>—</span>
+                      </div>
+                  {%- endcase -%}
+                </td>
+                <td class="column-3">
+                  {%- assign comparison_value = section.settings[feature_col3] | default: 'cross' -%}
+                  {%- case comparison_value -%}
+                    {%- when 'check' -%}
+                      <div class="comparison-icon check">
+                        <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                          <path d="M1 6L5.5 10.5L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                    {%- when 'cross' -%}
+                      <div class="comparison-icon cross">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                          <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                    {%- when 'question' -%}
+                      <div class="comparison-icon question">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 29 29" height="29" width="29">
+                          <circle cx="14.5" cy="14.5" r="14" fill="black"/>
+                          <path fill="white" d="M14.3279 23.0596C13.5535 23.0596 12.9279 22.434 12.9279 21.6597C12.9279 20.8897 13.5535 20.264 14.3279 20.264C15.0979 20.264 15.7235 20.8897 15.7235 21.6597C15.7235 22.434 15.0979 23.0596 14.3279 23.0596ZM17.0448 14.6203C16.0779 15.469 15.6316 16.2303 15.6316 17.0134C15.6316 17.7309 15.0454 18.3171 14.3279 18.3171C13.606 18.3171 13.0241 17.7309 13.0241 17.0134C13.0241 15.4471 13.7766 14.0253 15.321 12.6647C16.6991 11.4528 16.8741 10.6871 16.7122 9.91277C16.5547 9.14276 15.5835 8.58715 14.4066 8.58715C14.3235 8.58715 12.3722 8.60464 12.0179 10.1709C11.8604 10.8709 11.1648 11.3172 10.4604 11.1509C9.76037 10.9934 9.31849 10.2978 9.47598 9.5934C10.1235 6.74089 12.8797 5.97964 14.4066 5.97964C16.8523 5.97964 18.8516 7.37965 19.2672 9.38341C19.7791 11.8728 18.2435 13.5659 17.0448 14.6203Z"/>
+                        </svg>
+                      </div>
+                    {%- else -%}
+                      <div class="comparison-icon none">
+                        <span>—</span>
+                      </div>
+                  {%- endcase -%}
+                </td>
+              </tr>
+            {%- endif -%}
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{{ 'section-comparison-table.css' | asset_url | stylesheet_tag }}
+
+
+{% schema %}
+{
+  "name": "Dynamic Comparison Table",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Table Title",
+      "default": "What Makes REJU Best For You"
+    },
+    {
+      "type": "header",
+      "content": "Table Columns"
+    },
+    {
+      "type": "text",
+      "id": "column_1_name",
+      "label": "Column 1 Name"
+    },
+    {
+      "type": "image_picker",
+      "id": "column_1_logo",
+      "label": "Column 1 Logo"
+    },
+    {
+      "type": "text",
+      "id": "column_2_name",
+      "label": "Column 2 Name",
+      "default": "EYE CREAMS"
+    },
+    {
+      "type": "image_picker",
+      "id": "column_2_logo",
+      "label": "Column 2 Logo"
+    },
+    {
+      "type": "text",
+      "id": "column_3_name",
+      "label": "Column 3 Name",
+      "default": "CONCEALERS"
+    },
+    {
+      "type": "image_picker",
+      "id": "column_3_logo",
+      "label": "Column 3 Logo"
+    },
+    {
+      "type": "header",
+      "content": "Table Features"
+    },
+    {
+      "type": "text",
+      "id": "feature_1_name",
+      "label": "Feature 1 Name",
+      "default": "Supports lymphatic drainage"
+    },
+    {
+      "type": "select",
+      "id": "feature_1_column_1",
+      "label": "Feature 1 - Column 1",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "feature_1_column_2",
+      "label": "Feature 1 - Column 2",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "select",
+      "id": "feature_1_column_3",
+      "label": "Feature 1 - Column 3",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "text",
+      "id": "feature_2_name",
+      "label": "Feature 2 Name",
+      "default": "Targets puffiness, fine lines & dark circles"
+    },
+    {
+      "type": "select",
+      "id": "feature_2_column_1",
+      "label": "Feature 2 - Column 1",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "feature_2_column_2",
+      "label": "Feature 2 - Column 2",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "select",
+      "id": "feature_2_column_3",
+      "label": "Feature 2 - Column 3",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "text",
+      "id": "feature_3_name",
+      "label": "Feature 3 Name",
+      "default": "Provides both immediate and lasting benefits"
+    },
+    {
+      "type": "select",
+      "id": "feature_3_column_1",
+      "label": "Feature 3 - Column 1",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "feature_3_column_2",
+      "label": "Feature 3 - Column 2",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "select",
+      "id": "feature_3_column_3",
+      "label": "Feature 3 - Column 3",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "text",
+      "id": "feature_4_name",
+      "label": "Feature 4 Name",
+      "default": "Designed for aging, thinning skin"
+    },
+    {
+      "type": "select",
+      "id": "feature_4_column_1",
+      "label": "Feature 4 - Column 1",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "feature_4_column_2",
+      "label": "Feature 4 - Column 2",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "select",
+      "id": "feature_4_column_3",
+      "label": "Feature 4 - Column 3",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "text",
+      "id": "feature_5_name",
+      "label": "Feature 5 Name",
+      "default": "Clean, fragrance-free formula"
+    },
+    {
+      "type": "select",
+      "id": "feature_5_column_1",
+      "label": "Feature 5 - Column 1",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "feature_5_column_2",
+      "label": "Feature 5 - Column 2",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "question"
+    },
+    {
+      "type": "select",
+      "id": "feature_5_column_3",
+      "label": "Feature 5 - Column 3",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "text",
+      "id": "feature_6_name",
+      "label": "Feature 6 Name",
+      "default": "Clinically inspired & dermatologist backed"
+    },
+    {
+      "type": "select",
+      "id": "feature_6_column_1",
+      "label": "Feature 6 - Column 1",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "feature_6_column_2",
+      "label": "Feature 6 - Column 2",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "question"
+    },
+    {
+      "type": "select",
+      "id": "feature_6_column_3",
+      "label": "Feature 6 - Column 3",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "text",
+      "id": "feature_7_name",
+      "label": "Feature 7 Name",
+      "default": "Targets the root cause rather than covering symptoms"
+    },
+    {
+      "type": "select",
+      "id": "feature_7_column_1",
+      "label": "Feature 7 - Column 1",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "feature_7_column_2",
+      "label": "Feature 7 - Column 2",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "select",
+      "id": "feature_7_column_3",
+      "label": "Feature 7 - Column 3",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "text",
+      "id": "feature_8_name",
+      "label": "Feature 8 Name",
+      "default": "90-day money-back guarantee"
+    },
+    {
+      "type": "select",
+      "id": "feature_8_column_1",
+      "label": "Feature 8 - Column 1",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "feature_8_column_2",
+      "label": "Feature 8 - Column 2",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "question"
+    },
+    {
+      "type": "select",
+      "id": "feature_8_column_3",
+      "label": "Feature 8 - Column 3",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" },
+        { "value": "question", "label": "Question Mark" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "question"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dynamic Comparison Table"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,142 @@
+<style>
+.testimonial-single {
+  background-color: #F5F5DC; /* Light orange/beige background */
+  padding: 2rem 0;
+}
+
+.testimonial-single__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonial-single__content {
+  display: flex;
+  align-items: center;
+  background-color: #E6F3FF; /* Light blue background */
+  border: 2px solid #90EE90; /* Light green border */
+  border-radius: 20px;
+  padding: 2rem;
+  gap: 2rem;
+  min-height: 200px;
+}
+
+.testimonial-single__text {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.testimonial-single__quote {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: #4A4A4A; /* Medium gray */
+  margin: 0 0 1.5rem 0;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.testimonial-single__author {
+  margin-top: 1rem;
+}
+
+.testimonial-single__author-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2C2C2C; /* Dark gray */
+  margin: 0 0 0.5rem 0;
+}
+
+.testimonial-single__author-title {
+  font-size: 1.2rem;
+  color: #666666; /* Light gray */
+  margin: 0;
+  font-weight: 400;
+}
+
+.testimonial-single__image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+}
+
+.testimonial-single__image-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  max-height: 250px;
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+  .testimonial-single__content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .testimonial-single__text {
+    order: 1;
+  }
+  
+  .testimonial-single__image {
+    order: 2;
+    max-width: 200px;
+  }
+  
+  .testimonial-single__quote {
+    font-size: 1.4rem;
+  }
+  
+  .testimonial-single__author-name {
+    font-size: 1.2rem;
+  }
+  
+  .testimonial-single__author-title {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .testimonial-single__content {
+    padding: 1rem;
+  }
+  
+  .testimonial-single__quote {
+    font-size: 1.2rem;
+  }
+}
+</style>
+
+<div class="testimonial-single">
+  <div class="page-width">
+    <div class="testimonial-single__container">
+      <div class="testimonial-single__content">
+        <div class="testimonial-single__text">
+          
+            <blockquote class="testimonial-single__quote">
+                "Any woman over 40 can benefit from the RejuBalm™, and get smoother, brighter eyes, even if other creams didn't work before."
+            </blockquote>
+          
+          
+         
+            <div class="testimonial-single__author">
+              <p class="testimonial-single__author-name">Dr. Blane Schilling M.D.</p>
+         
+                <p class="testimonial-single__author-title">Leading Anti-Aging Doctor</p>
+         
+            </div>
+         
+        </div>
+        
+        <div class="testimonial-single__image">
+          <img src="https://cumaskincare.com/cdn/shop/files/gempages_529564625927144577-919c9b07-e085-4dbe-a9a3-f272fbde5494.webp?v=1750862672&width=1000" alt="Dr. Blane Schilling M.D." class="testimonial-single__image-img">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
