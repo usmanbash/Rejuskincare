@@ -1,1 +1,528 @@
-{"sections":{"main":{"type":"main-product","blocks":{"vendor":{"type":"text","settings":{"text":"{{ product.vendor }}","text_style":"uppercase"}},"title":{"type":"title","settings":{}},"price":{"type":"price","settings":{}},"variant_picker":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"quantity_selector":{"type":"quantity_selector","settings":{}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"description":{"type":"description","settings":{}},"share":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["vendor","title","price","variant_picker","quantity_selector","buy_buttons","description","share"],"settings":{"enable_sticky_info":true,"color_scheme":"scheme-1","media_size":"large","constrain_to_viewport":true,"media_fit":"contain","gallery_layout":"stacked","mobile_thumbnails":"hide","media_position":"left","image_zoom":"lightbox","hide_variants":true,"enable_video_looping":false,"padding_top":36,"padding_bottom":12}},"related-products":{"type":"related-products","settings":{"heading":"You may also like","heading_size":"h2","products_to_show":4,"columns_desktop":4,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"padding_top":36,"padding_bottom":28}}},"order":["main","related-products"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+ {
+    "sections": {
+      "main": {
+        "type": "main-product",
+        "blocks": {
+          "vendor": {
+            "type": "text",
+            "settings": {
+              "text": "{{ product.vendor }}",
+              "text_style": "uppercase"
+            }
+          },
+          "title": {
+            "type": "title",
+            "settings": {}
+          },
+          "price": {
+            "type": "price",
+            "settings": {}
+          },
+          "variant_picker": {
+            "type": "variant_picker",
+            "settings": {
+              "picker_type": "button",
+              "swatch_shape": "circle"
+            }
+          },
+          "quantity_selector": {
+            "type": "quantity_selector",
+            "settings": {}
+          },
+          "buy_buttons": {
+            "type": "buy_buttons",
+            "settings": {
+              "show_dynamic_checkout": true,
+              "show_gift_card_recipient": true
+            }
+          },
+          "description": {
+            "type": "description",
+            "settings": {}
+          },
+          "share": {
+            "type": "share",
+            "settings": {
+              "share_label": "Share"
+            }
+          }
+        },
+        "block_order": [
+          "vendor",
+          "title",
+          "price",
+          "variant_picker",
+          "quantity_selector",
+          "buy_buttons",
+          "description",
+          "share"
+        ],
+        "settings": {
+          "enable_sticky_info": true,
+          "color_scheme": "scheme-1",
+          "media_size": "large",
+          "constrain_to_viewport": true,
+          "media_fit": "contain",
+          "gallery_layout": "stacked",
+          "mobile_thumbnails": "hide",
+          "media_position": "left",
+          "image_zoom": "lightbox",
+          "hide_variants": true,
+          "enable_video_looping": false,
+          "padding_top": 36,
+          "padding_bottom": 12
+        }
+      },
+      "related-products": {
+        "type": "related-products",
+        "settings": {
+          "heading": "You may also like",
+          "heading_size": "h2",
+          "products_to_show": 4,
+          "columns_desktop": 4,
+          "columns_mobile": "2",
+          "color_scheme": "scheme-1",
+          "image_ratio": "square",
+          "image_shape": "default",
+          "show_secondary_image": true,
+          "show_vendor": false,
+          "show_rating": false,
+          "padding_top": 36,
+          "padding_bottom": 28
+        }
+      },
+      "rich_text_zeaKag": {
+        "type": "rich-text",
+        "blocks": {
+          "text_yDyMyX": {
+            "type": "text",
+            "settings": {
+              "review_image": "shopify://shop_images/Stars_1.png",
+              "text": "<p> <strong>4.9</strong>/5 (1,254 reviews)</p>"
+            }
+          },
+          "heading_LkJFwj": {
+            "type": "heading",
+            "settings": {
+              "heading": "RejuBalm™ targets the root cause - hydration and microcirculation repair.",
+              "heading_size": "h2"
+            }
+          },
+          "text_df83KD": {
+            "type": "text",
+            "settings": {
+              "text": "<p>Our skincare transformation experts are ready to answer your questions. Get personalized support within 5 minutes and start your skin journey with confidence. </p>"
+            }
+          }
+        },
+        "block_order": [
+          "text_yDyMyX",
+          "heading_LkJFwj",
+          "text_df83KD"
+        ],
+        "name": "t:sections.rich-text.presets.name",
+        "settings": {
+          "desktop_content_position": "center",
+          "content_alignment": "center",
+          "color_scheme": "scheme-4af365e0-1caa-4340-b2ff-01755bad2e35",
+          "full_width": true,
+          "padding_top": 40,
+          "padding_bottom": 40
+        }
+      },
+      "custom_multicolumn_JVTJd8": {
+        "type": "custom-multicolumn",
+        "blocks": {
+          "column_tgQ87y": {
+            "type": "column",
+            "settings": {
+              "image": "shopify://shop_images/image_7.png",
+              "title": "",
+              "text": "",
+              "link_label": "",
+              "link": "",
+              "before": "Before",
+              "after": "After 10 Days"
+            }
+          },
+          "column_LCEcRa": {
+            "type": "column",
+            "settings": {
+              "image": "shopify://shop_images/image_7.png",
+              "title": "",
+              "text": "",
+              "link_label": "",
+              "link": "",
+              "before": "Before",
+              "after": "After 7 Days"
+            }
+          },
+          "column_LYnyaU": {
+            "type": "column",
+            "settings": {
+              "image": "shopify://shop_images/image_7.png",
+              "title": "",
+              "text": "",
+              "link_label": "",
+              "link": "",
+              "before": "Before",
+              "after": "After 10 Nights"
+            }
+          }
+        },
+        "block_order": [
+          "column_tgQ87y",
+          "column_LCEcRa",
+          "column_LYnyaU"
+        ],
+        "name": "Custom Multicolumn",
+        "settings": {
+          "title": "",
+          "heading_size": "h1",
+          "image_width": "full",
+          "image_ratio": "adapt",
+          "button_label": "See More Transformations",
+          "button_link": "shopify://collections",
+          "full_width_btn": true,
+          "divider": true,
+          "columns_desktop": 3,
+          "column_alignment": "left",
+          "background_style": "none",
+          "color_scheme": "scheme-4af365e0-1caa-4340-b2ff-01755bad2e35",
+          "columns_mobile": "1",
+          "swipe_on_mobile": true,
+          "padding_top": 0,
+          "padding_bottom": 36
+        }
+      },
+      "custom_icon_text_bg_Rt4R8G": {
+        "type": "custom-icon-text-bg",
+        "blocks": {
+          "feature_YUDcyc": {
+            "type": "feature",
+            "settings": {
+              "icon": "shopify://shop_images/Frame_1484580453.png",
+              "title": "Gentle & Soothing",
+              "desc": "Clinically tested, safe for delicate skin"
+            }
+          },
+          "feature_Dxxy7g": {
+            "type": "feature",
+            "settings": {
+              "icon": "shopify://shop_images/nimbus_drop.png",
+              "title": "Hydrating with no residue",
+              "desc": "Gentle formula soothes without irritation"
+            }
+          },
+          "feature_Xa7kme": {
+            "type": "feature",
+            "settings": {
+              "icon": "shopify://shop_images/iconoir_sparks.png",
+              "title": "Instantly Refreshes & Brightens",
+              "desc": "Results from your first application"
+            }
+          },
+          "feature_e3kRwY": {
+            "type": "feature",
+            "settings": {
+              "icon": "shopify://shop_images/streamline-ultimate_make-up-lipstick.png",
+              "title": "Ideal for makeup, day or night",
+              "desc": "Easy application fits your routine"
+            }
+          },
+          "feature_kTx8zV": {
+            "type": "feature",
+            "settings": {
+              "icon": "shopify://shop_images/waves-fill-svgrepo-com.svg",
+              "title": "Free from Alcohol & Parabens",
+              "desc": "Pure, gentle ingredients your skin will love"
+            }
+          },
+          "feature_ejaGiA": {
+            "type": "feature",
+            "settings": {
+              "icon": "shopify://shop_images/fluent_luggage-16-regular_2x_c775048d-6b8c-449a-9fbf-46bf86ec6f12.png",
+              "title": "Travel-Friendly Stick",
+              "desc": "Compact design perfect for busy lifestyles"
+            }
+          }
+        },
+        "block_order": [
+          "feature_YUDcyc",
+          "feature_Dxxy7g",
+          "feature_Xa7kme",
+          "feature_e3kRwY",
+          "feature_kTx8zV",
+          "feature_ejaGiA"
+        ],
+        "name": "Icon Grid Section",
+        "settings": {
+          "mobile_columns": "2",
+          "section_bg": "#f8f5f2",
+          "subtitle": "",
+          "section_title": "Why Women Choose RejuBalm™",
+          "desc": "",
+          "title_font_size": 32,
+          "icon_size": 40,
+          "icon_bg": "#f5ed94",
+          "block_bg": "#ffffff",
+          "button_label": "",
+          "button_link": "",
+          "padding_top": 40,
+          "padding_bottom": 52
+        }
+      },
+      "custom_icon_text_bg_fKk39F": {
+        "type": "custom-icon-text-bg",
+        "blocks": {
+          "feature_LJqLQm": {
+            "type": "feature",
+            "settings": {
+              "icon": "shopify://shop_images/coffee-bean--cook-cooking-nutrition-coffee-bean.png",
+              "title": "Caffeine Complex",
+              "desc": "Reduces puffiness and boosts circulation within minutes for an instant look of rest."
+            }
+          },
+          "feature_8zrXaa": {
+            "type": "feature",
+            "settings": {
+              "icon": "shopify://shop_images/Frame_1484580451.png",
+              "title": "Vitamin E + Peptides",
+              "desc": "Rebuild elasticity and strengthen skin barrier for long-term renewal."
+            }
+          },
+          "feature_pTAG9i": {
+            "type": "feature",
+            "settings": {
+              "icon": "shopify://shop_images/Frame_1484580452.png",
+              "title": "Turmeric Extract",
+              "desc": "Anti-inflammatory antioxidant that restores calm, radiant tone."
+            }
+          }
+        },
+        "block_order": [
+          "feature_LJqLQm",
+          "feature_8zrXaa",
+          "feature_pTAG9i"
+        ],
+        "name": "Icon Grid Section",
+        "settings": {
+          "mobile_columns": "1",
+          "section_bg": "#f0e9e0",
+          "subtitle": "How It Works",
+          "section_title": "The Dermatologist's Recommended New Mechanism for Under-Eye Renewal.",
+          "desc": "Unlike creams that sit on top, RejuBalm™'s derm-grade complex  absorbs fast & activates microcirculation beneath the skin.",
+          "title_font_size": 32,
+          "icon_size": 32,
+          "icon_bg": "#f5ed94",
+          "block_bg": "#ffffff",
+          "button_label": "Why Dermatologists Recommend",
+          "button_link": "shopify://collections/hair-care",
+          "padding_top": 56,
+          "padding_bottom": 56
+        }
+      },
+      "custom_comparison_table_UCpDCe": {
+        "type": "custom-comparison-table",
+        "blocks": {
+          "button_MJ9iyX": {
+            "type": "button",
+            "settings": {
+              "button_label": "Start Your Transformation Today",
+              "button_link": "shopify://collections",
+              "button_style_secondary": false
+            }
+          },
+          "icon_text_dqyniQ": {
+            "type": "icon-text",
+            "settings": {
+              "image_1": "shopify://shop_images/Lock-2--Streamline-Ultimate.png",
+              "text_1": "Secure checkout",
+              "image_2": "shopify://shop_images/Shipping-Truck-Fast--Streamline-Ultimate.png",
+              "text_2": "Fast shipping",
+              "image_3": "shopify://shop_images/Certified-Ribbon-1--Streamline-Ultimate.png",
+              "text_3": "100% MONEY BACK GUARANTEE"
+            }
+          }
+        },
+        "block_order": [
+          "button_MJ9iyX",
+          "icon_text_dqyniQ"
+        ],
+        "name": "Comparison Table 3x7",
+        "settings": {
+          "heading": "RejuBalm™ vs. Traditional Eye Creams: The Instant Difference",
+          "heading_size": "h1",
+          "section_bg": "#fffefe",
+          "middle_col_bg": "#f9f4bd",
+          "middle_icon": "shopify://shop_images/Verified-Check--Streamline-Solar_1.png",
+          "col1_title": "",
+          "col2_image": "shopify://shop_images/558f49da998e4c4dc346c90ac805ff15878849e0.png",
+          "col2_title": "RejuBalm™",
+          "col3_image": "shopify://shop_images/78ad9b573574b0d4df5f491fd843879a7c1e0c73.png",
+          "col3_title": "Others",
+          "row1_col1": "Application",
+          "row1_col2": "5-second swipe",
+          "row1_col3": "2-minute ritual",
+          "row2_col1": "Sensitivity Tested",
+          "row2_col2": "Fragrance-free",
+          "row2_col3": "Not tested",
+          "row3_col1": "How Long Results Last",
+          "row3_col2": "12h+ hydration",
+          "row3_col3": "2-3h moisture only",
+          "row4_col1": "Makeup Compatibility",
+          "row4_col2": "Smooth & primer-safe",
+          "row4_col3": "Pills, creases",
+          "row5_col1": "Travel-Friendly",
+          "row5_col2": "No spills & fits in pocket",
+          "row5_col3": "Bulky, often leak in bags",
+          "row6_col1": "Guarantee",
+          "row6_col2": "90-Day Money-Back",
+          "row6_col3": "No returns if opened",
+          "padding_top": 64,
+          "padding_bottom": 52
+        }
+      },
+      "multicolumn_tVAEXc": {
+        "type": "multicolumn",
+        "blocks": {
+          "column_titqi6": {
+            "type": "column",
+            "settings": {
+              "rounded-text": "MORNING",
+              "rounded-text-color": "#f5ed94",
+              "image": "shopify://shop_images/Placeholder_Image_1.png",
+              "title": "Instant De-Puff",
+              "text": "<p>One swipe from inner to outer corner. Watch puffiness vanish in 60 seconds while you do your hair</p>",
+              "link_label": "",
+              "link": ""
+            }
+          },
+          "column_dwcKhB": {
+            "type": "column",
+            "settings": {
+              "rounded-text": "NIGHT",
+              "rounded-text-color": "#f5ed94",
+              "image": "shopify://shop_images/Placeholder_Image_2.png",
+              "title": "Overnight Collagen Boost",
+              "text": "<p>Apply before bed to activate collagen production. Wake up with firmer, brighter eyes.</p>",
+              "link_label": "",
+              "link": ""
+            }
+          },
+          "column_9K3ETm": {
+            "type": "column",
+            "settings": {
+              "rounded-text": "YOUR TIMELINE",
+              "rounded-text-color": "#f5ed94",
+              "image": "shopify://shop_images/Placeholder_Image_3.png",
+              "title": "Track Your Transformation",
+              "text": "<p>Day 1: Puffiness gone in 60 secondsDay 7: Dark circles noticeably lighterDay 30: Fine lines visibly reduced</p>",
+              "link_label": "",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "column_titqi6",
+          "column_dwcKhB",
+          "column_9K3ETm"
+        ],
+        "name": "t:sections.multicolumn.presets.name",
+        "settings": {
+          "special_class": "special_class",
+          "no-padding": false,
+          "title": "5 Seconds to Apply, 60 Seconds to Transform",
+          "heading_size": "h1",
+          "text": "<p>Faster than brushing your teeth. More effective than $300 creams.<br/><br/></p>",
+          "text_style": "body",
+          "image_width": "full",
+          "image_ratio": "adapt",
+          "button_label": "",
+          "button_link": "",
+          "columns_desktop": 3,
+          "column_alignment": "center",
+          "background_style": "primary",
+          "color_scheme": "scheme-b08be2d9-269d-41f1-bce1-bef0df7d024d",
+          "columns_mobile": "1",
+          "swipe_on_mobile": true,
+          "card_bg_color": "#ffffff",
+          "gurantee_text": "<p><strong>PRO TIP</strong>: Acts as primer! Apply 60 seconds before makeup - no creasing for 12+ hours</p>",
+          "padding_top": 56,
+          "padding_bottom": 56
+        }
+      },
+      "customer_review_carousel_QVAcGr": {
+        "type": "customer-review-carousel",
+        "blocks": {
+          "review_XwzNUG": {
+            "type": "review",
+            "settings": {
+              "review_date": "Oct 25, 2025",
+              "review_text": "I was afraid my eyes were aging me — now I look rested even on 4 hours sleep. The stick is so convenient and doesn't irritate my sensitive skin",
+              "reviewer_age": "Patty, 48"
+            }
+          },
+          "review_JHd3hp": {
+            "type": "review",
+            "settings": {
+              "review_date": "Oct 25, 2025",
+              "review_text": "\"As a nurse working long shifts, my eyes always looked tired. RejuBalm changed everything - I get compliments on how refreshed I look!",
+              "reviewer_age": "Patty, 48"
+            }
+          },
+          "review_cQqnbN": {
+            "type": "review",
+            "settings": {
+              "review_date": "Oct 25, 2025",
+              "review_text": "\"Finally, an eye product that actually works! No stinging, no pilling under makeup, and my dark circles are barely visible now.",
+              "reviewer_age": "Patty, 48"
+            }
+          },
+          "review_YQUx6x": {
+            "type": "review",
+            "settings": {
+              "review_date": "Oct 25, 2025",
+              "review_text": "\"Finally, an eye product that actually works! No stinging, no pilling under makeup, and my dark circles are barely visible now.",
+              "reviewer_age": "Patty, 48"
+            }
+          }
+        },
+        "block_order": [
+          "review_XwzNUG",
+          "review_JHd3hp",
+          "review_cQqnbN",
+          "review_YQUx6x"
+        ],
+        "name": "Review Carousel",
+        "settings": {
+          "heading": "Loved by 1,250+ Women",
+          "section_bg": "#f8f5f2",
+          "card_bg": "#ffffff",
+          "padding_top": 40,
+          "padding_bottom": 52
+        }
+      }
+    },
+    "order": [
+      "main",
+      "related-products",
+      "rich_text_zeaKag",
+      "custom_multicolumn_JVTJd8",
+      "custom_icon_text_bg_Rt4R8G",
+      "custom_icon_text_bg_fKk39F",
+      "custom_comparison_table_UCpDCe",
+      "multicolumn_tVAEXc",
+      "customer_review_carousel_QVAcGr"
+    ]
+  }
+  
