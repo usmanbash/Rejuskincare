@@ -41,7 +41,8 @@
 .text-content {
     margin: 0;
     text-transform: uppercase;
-    font-size: 13px;
+    font-size: 12px;
+    letter-spacing: 0;
 }
 .border-right{
     border-right:1px solid #1D211EBF;
@@ -148,4 +149,103 @@ ul.bullets li{
     background: #F5ED94;
     border-radius: 9999px;
     padding: 4px 12px;
+}
+
+/* Product gallery - thumbnails on left */
+@media screen and (min-width: 750px) {
+  /* Change gallery layout to show thumbnails on left for thumbnail and thumbnail_slider layouts */
+  .product--thumbnail media-gallery,
+  .product--thumbnail_slider media-gallery {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .product--thumbnail media-gallery > slider-component,
+  .product--thumbnail_slider media-gallery > slider-component {
+    flex: 1;
+  }
+
+  .product--thumbnail .thumbnail-slider,
+  .product--thumbnail_slider .thumbnail-slider {
+    display: flex !important;
+    flex-direction: column;
+    max-width: 80px;
+    width: 80px;
+    flex-shrink: 0;
+    max-height: 508px;
+  }
+
+  .product--thumbnail .thumbnail-list,
+  .product--thumbnail_slider .thumbnail-list {
+    display: flex !important;
+    flex-direction: column;
+    gap: 1rem;
+    grid-template-columns: unset !important;
+    padding: 0;
+  }
+
+  .product--thumbnail .thumbnail-slider .slider-button,
+  .product--thumbnail_slider .thumbnail-slider .slider-button {
+    transform: rotate(90deg);
+    margin: 0.5rem auto;
+    position: relative;
+  }
+
+  .product--thumbnail .thumbnail-slider .slider-button--prev,
+  .product--thumbnail_slider .thumbnail-slider .slider-button--prev {
+    order: -1;
+  }
+
+  .product--thumbnail .thumbnail-slider .slider-button--next,
+  .product--thumbnail_slider .thumbnail-slider .slider-button--next {
+    order: 1;
+  }
+
+  .product--thumbnail .thumbnail-list,
+  .product--thumbnail_slider .thumbnail-list {
+    order: 0;
+    flex: 1;
+    overflow-y: auto;
+    max-height: 600px;
+  }
+
+  /* Ensure proper thumbnail item aspect ratio */
+  .product--thumbnail .thumbnail-list__item,
+  .product--thumbnail_slider .thumbnail-list__item {
+    flex: 0 0 auto;
+  }
+
+  /* Force slider buttons to display for vertical thumbnail layout */
+  .product--thumbnail .thumbnail-slider .slider-button,
+  .product--thumbnail_slider .thumbnail-slider .slider-button {
+    display: flex !important;
+  }
+}
+
+/* Custom Points Block */
+.product__custom-points {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.product__custom-points .custom-point {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.product__custom-points .custom-point svg {
+  flex-shrink: 0;
+}
+
+.product__custom-points .custom-point span {
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  font-weight: bold;
+  color: #1D211E;
 }
