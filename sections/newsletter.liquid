@@ -1,6 +1,5 @@
 {{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
 {{ 'newsletter-section.css' | asset_url | stylesheet_tag }}
-{{ 'component-rte.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -14,33 +13,47 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
-
-  .color-scheme-{{ section.id }}.color-custom {
-    --color-background: {{ section.settings.custom_colors_background.red }}, {{ section.settings.custom_colors_background.green }}, {{ section.settings.custom_colors_background.blue }};
-    --gradient-background: {% if section.settings.custom_gradient_background != blank %}{{ section.settings.custom_gradient_background }}{% else %}{{ section.settings.custom_colors_background }}{% endif %};
-    --color-foreground: {{ section.settings.custom_colors_text.red }}, {{ section.settings.custom_colors_text.green }}, {{ section.settings.custom_colors_text.blue }};
-    --color-button: {{ section.settings.custom_colors_solid_button_background.red }}, {{ section.settings.custom_colors_solid_button_background.green }}, {{ section.settings.custom_colors_solid_button_background.blue }};
-    --color-button-text: {{ section.settings.custom_colors_solid_button_text.red }}, {{ section.settings.custom_colors_solid_button_text.green }}, {{ section.settings.custom_colors_solid_button_text.blue }};
-  }
 {%- endstyle -%}
 
-<div class="newsletter center {% if section.settings.full_width == false %}newsletter--narrow page-width{% endif %} {{ section.settings.visibility }}">
-  <div class="newsletter__wrapper color-scheme-{{ section.id }} color-{{ section.settings.color_scheme }} gradient content-container isolate{% if section.settings.full_width %} content-container--full-width{% endif %} section-{{ section.id }}-padding">
+<div class="newsletter center {% if section.settings.full_width == false %}newsletter--narrow page-width{% endif %}">
+  <div class="newsletter__wrapper color-{{ section.settings.color_scheme }} gradient content-container isolate{% if section.settings.full_width %} content-container--full-width{% endif %} section-{{ section.id }}-padding">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when '@app' -%}
           {% render block %}
         {%- when 'heading' -%}
-          <h2 class="{{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
-            {{ block.settings.heading | escape }}
+          <h2
+            class="inline-richtext {{ block.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {{ block.shopify_attributes }}
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+            {% endif %}
+          >
+            {{ block.settings.heading }}
           </h2>
         {%- when 'paragraph' -%}
-          <div class="newsletter__subheading rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          <div
+            class="newsletter__subheading rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {{ block.shopify_attributes }}
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+            {% endif %}
+          >
+            {{ block.settings.text }}
+          </div>
         {%- when 'email_form' -%}
           <div {{ block.shopify_attributes }}>
             {% form 'customer', class: 'newsletter-form' %}
               <input type="hidden" name="contact[tags]" value="newsletter">
-              <div class="newsletter-form__field-wrapper">
+              <div
+                class="newsletter-form__field-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                {% if settings.animations_reveal_on_scroll %}
+                  data-cascade
+                  style="--animation-order: {{ forloop.index }};"
+                {% endif %}
+              >
                 <div class="field">
                   <input
                     id="NewsletterForm--{{ section.id }}"
@@ -65,32 +78,23 @@
                   <label class="field__label" for="NewsletterForm--{{ section.id }}">
                     {{ 'newsletter.label' | t }}
                   </label>
-                  {% if section.settings.button_type == 'arrow' %}
-                    <button
-                      type="submit"
-                      class="newsletter-form__button field__button"
-                      name="commit"
-                      id="Subscribe"
-                      aria-label="{{ 'newsletter.button_label' | t }}"
-                    >
-                      {% render 'icon-arrow' %}
-                    </button>
-                  {% endif %}
-                </div>
-                {% if section.settings.button_type == 'solid' %}
                   <button
                     type="submit"
-                    class="button newsletter__solid-btn button--full-width{% if section.settings.button_style_secondary %} button--secondary{% endif %}"
+                    class="newsletter-form__button field__button"
                     name="commit"
                     id="Subscribe"
                     aria-label="{{ 'newsletter.button_label' | t }}"
                   >
-                    {{ section.settings.button_label }}
+                    <span class="svg-wrapper">
+                      {{- 'icon-arrow.svg' | inline_asset_content -}}
+                    </span>
                   </button>
-                {% endif %}
+                </div>
                 {%- if form.errors -%}
                   <small class="newsletter-form__message form__message" id="Newsletter-error--{{ section.id }}">
-                    {%- render 'icon-error' -%}
+                    <span class="svg-wrapper">
+                      {{- 'icon-error.svg' | inline_asset_content -}}
+                    </span>
                     {{- form.errors.translated_fields.email | capitalize }}
                     {{ form.errors.messages.email -}}
                   </small>
@@ -103,7 +107,9 @@
                   tabindex="-1"
                   autofocus
                 >
-                  {% render 'icon-success' -%}
+                  <span class="svg-wrapper">
+                    {{- 'icon-success.svg' | inline_asset_content -}}
+                  </span>
                   {{- 'newsletter.success' | t }}
                 </h3>
               {%- endif -%}
@@ -123,95 +129,21 @@
     "groups": ["header"]
   },
   "settings": [
-        {
-      "type": "select",
-      "id": "visibility",
-      "options": [
-        {
-          "value": "desktop-hidden",
-          "label": "Mobile only"
-        },
-        {
-          "value": "mobile-hidden",
-          "label": "Desktop only"
-        },
-        {
-          "value": "always-display",
-          "label": "All devices"
-        }
-      ],
-      "label": "Display on",
-      "default": "always-display"
+    {
+      "type": "paragraph",
+      "content": "t:sections.newsletter.settings.paragraph.content"
     },
     {
-      "type": "select",
-      "id": "button_type",
-      "options": [
-        {
-          "value": "arrow",
-          "label": "Arrow button"
-        },
-        {
-          "value": "solid",
-          "label": "Solid button"
-        }
-      ],
-      "default": "solid",
-      "label": "Submit button type"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Solid button label",
-      "default": "Sign up"
-    },
-    {
-      "type": "checkbox",
-      "id": "button_style_secondary",
-      "label": "t:sections.slideshow.blocks.slide.settings.secondary_style.label",
-      "default": false
-    },
-    {
-      "type": "select",
+      "type": "color_scheme",
       "id": "color_scheme",
-      "options": [
-        {
-          "value": "accent-1",
-          "label": "t:sections.all.colors.accent_1.label"
-        },
-        {
-          "value": "accent-2",
-          "label": "t:sections.all.colors.accent_2.label"
-        },
-        {
-          "value": "background-1",
-          "label": "t:sections.all.colors.background_1.label"
-        },
-        {
-          "value": "background-2",
-          "label": "t:sections.all.colors.background_2.label"
-        },
-        {
-          "value": "inverse",
-          "label": "t:sections.all.colors.inverse.label"
-        },
-        {
-          "value": "custom",
-          "label": "Custom"
-        }
-      ],
-      "default": "background-1",
-      "label": "t:sections.all.colors.label"
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
     },
     {
       "type": "checkbox",
       "id": "full_width",
       "default": true,
       "label": "t:sections.newsletter.settings.full_width.label"
-    },
-    {
-      "type": "paragraph",
-      "content": "t:sections.newsletter.settings.paragraph.content"
     },
     {
       "type": "header",
@@ -236,42 +168,7 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 52
-    },
-    {
-      "type": "header",
-      "content": "Custom color scheme",
-      "info": "Applied if Color scheme setting is set to Custom."
-    },
-    {
-      "type": "color",
-      "id": "custom_colors_background",
-      "default": "#FFFFFF",
-      "label": "Background color"
-    },
-    {
-      "type": "color_background",
-      "id": "custom_gradient_background",
-      "label": "Gradient background",
-      "info": "If added, replaces Background color when applicable."
-    },
-    {
-      "type": "color",
-      "id": "custom_colors_text",
-      "default": "#2E2A39",
-      "label": "Text"
-    },
-    {
-      "type": "color",
-      "id": "custom_colors_solid_button_background",
-      "default": "#dd1d1d",
-      "label": "Solid button background"
-    },
-    {
-      "type": "color",
-      "id": "custom_colors_solid_button_text",
-      "default": "#ffffff",
-      "label": "Solid button label"
-    },
+    }
   ],
   "blocks": [
     {
@@ -280,9 +177,9 @@
       "limit": 1,
       "settings": [
         {
-          "type": "text",
+          "type": "inline_richtext",
           "id": "heading",
-          "default": "Subscribe to our emails",
+          "default": "t:sections.newsletter.blocks.heading.settings.heading.default",
           "label": "t:sections.newsletter.blocks.heading.settings.heading.label"
         },
         {
@@ -300,6 +197,14 @@
             {
               "value": "h0",
               "label": "t:sections.all.heading_size.options__3.label"
+            },
+            {
+              "value": "hxl",
+              "label": "t:sections.all.heading_size.options__4.label"
+            },
+            {
+              "value": "hxxl",
+              "label": "t:sections.all.heading_size.options__5.label"
             }
           ],
           "default": "h1",
@@ -315,7 +220,7 @@
         {
           "type": "richtext",
           "id": "text",
-          "default": "<p>Be the first to know about new collections and exclusive offers.</p>",
+          "default": "t:sections.newsletter.blocks.paragraph.settings.paragraph.default",
           "label": "t:sections.newsletter.blocks.paragraph.settings.paragraph.label"
         }
       ]

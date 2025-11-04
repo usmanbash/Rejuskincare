@@ -1,0 +1,465 @@
+{% style %}
+.three-product-section {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.three-product-section .product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  justify-items: center;
+  max-width: 952px;
+  width: 100%;
+  margin: 40px auto;
+}
+
+/* Make product cards flexible so buttons align evenly */
+.three-product-section .product-card {
+  position: relative;
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 350px;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.three-product-section .product-card:hover {
+  transform: translateY(-5px);
+}
+
+.three-product-section .product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Divider under image */
+.three-product-section .product-divider {
+  border-bottom: 1px solid #ddd;
+  margin: 16px 0;
+}
+
+/* Product title */
+.three-product-section .product-title {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* Product description */
+.three-product-section .product-desc {
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  display: inline-block;
+  background-color: #f2f2f2;
+  width: fit-content;
+    margin: auto;
+}
+
+/* Pricing area */
+.three-product-section .product-pricing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.three-product-section .product-pricing .discounted {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.three-product-section .product-pricing .compare {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.three-product-section .product-pricing .off {
+  color: #d00;
+  font-weight: 600;
+}
+
+/* Badge label (Most Popular, Best Value) */
+.three-product-section .badge-label {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: bold;
+  border-radius: 4px;
+  background-color: #000;
+  color: #fff;
+}
+
+/* Button styles */
+.three-product-section .product-card form .btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  margin-top: auto; /* Keeps buttons aligned across cards */
+  transition: background-color 0.3s ease;
+}
+
+.three-product-section .product-card form .btn:hover {
+  background-color: #333;
+}
+
+/* Highlight middle and last cards */
+.three-product-section .product-card.popular {
+  background-color: #fffce8;
+  border: 2px solid #000;
+}
+
+.three-product-section .product-card.best {
+  border: 2px solid #000;
+}
+.gurantee-block {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    gap: 4px;
+    background: #F3EEE7;
+    border-radius: 8px;
+    border: 2px dashed #8C8C8C;
+}
+.gurantee-block p{
+    margin:0;
+}
+/* Responsive */
+@media (max-width: 768px) {
+  .three-product-section .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .three-product-section .product-card {
+    max-width: 100%;
+  }
+  .gurantee-block{
+    display: none;
+  }
+}
+{% endstyle %}
+
+
+<section class="three-product-section" style="background-color: {{ section.settings.section_bg }};">
+  <div class="page-width">
+    <h2
+                    class="image-with-text__heading inline-richtext {{  section.settings.heading_size }}"
+                    {{ section.shopify_attributes }}
+                  >
+                    {{ section.settings.heading }}
+                  </h2>
+    <div class="product-grid">
+      {% for block in section.blocks %}
+        {% assign product = all_products[block.settings.product] %}
+        {% if product %}
+          {% if forloop.index == 2 %}
+            {% assign position = 'middle' %}
+          {% elsif forloop.index == 3 %}
+            {% assign position = 'third' %}
+          {% else %}
+            {% assign position = 'normal' %}
+          {% endif %}
+
+          <div
+            class="product-card"
+            style="
+              {% if position == 'middle' %}
+                background-color: {{ section.settings.middle_bg }};
+                border: 2px solid {{ section.settings.middle_border_color }};
+              {% else %}
+                background-color: {{ block.settings.card_bg }};
+                border: 1px solid #EFE7DE;
+              {% endif %}
+            "
+          >
+            {% if position == 'middle' %}
+              <div class="badge-label"
+                style="background-color: {{ section.settings.middle_label_bg }}; color: {{ section.settings.middle_label_color }};">
+                {{ section.settings.middle_label_text }}
+              </div>
+            {% elsif position == 'third' %}
+              <div class="badge-label"
+                style="background-color: {{ section.settings.third_label_bg }}; color: {{ section.settings.third_label_color }};">
+                {{ section.settings.third_label_text }}
+              </div>
+            {% endif %}
+
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}">
+            {% endif %}
+
+            <div class="product-divider"></div>
+
+            {% if block.settings.custom_title != blank %}
+              <h3 class="product-title"
+                style="font-size: {{ section.settings.title_size }}px; color: {{ section.settings.title_color }};">
+                {{ block.settings.custom_title }}
+              </h3>
+            {% endif %}
+
+            {% if block.settings.custom_desc != blank %}
+              <p class="product-desc"
+                style="background-color: {{ section.settings.desc_bg }}; color: {{ section.settings.desc_color }};">
+                {{ block.settings.custom_desc }}
+              </p>
+            {% endif %}
+
+            <div class="product-pricing">
+              <span class="discounted">{{ product.price | money }}</span>
+
+              {% if product.compare_at_price > product.price %}
+                <span class="compare">{{ product.compare_at_price | money }}</span>
+
+                {% assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round %}
+                <span style="color: {{ section.settings.discount_color }}; font-weight: bold;">
+                  {{ discount }}% OFF
+                </span>
+              {% endif %}
+            </div>
+
+            <form method="post" action="/cart/add">
+              <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+              <button type="submit" class="button button--full-width"
+                style="background-color: {{ section.settings.button_bg }}; color: {{ section.settings.button_color }};">
+                {{ section.settings.button_text }} {% render 'icon-caret-right' %}
+              </button>
+              
+            </form>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="gurantee-block">
+        {% if section.settings.img_1 != blank %}
+            <img src="{{ section.settings.img_1 | img_url: 'master' }}">
+        {% endif %}
+
+        {{ section.settings.gurantee_text }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Three Product Feature",
+  "settings": [
+    {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "t:sections.image-with-text.blocks.heading.settings.heading.default",
+          "label": "t:sections.image-with-text.blocks.heading.settings.heading.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "t:sections.all.heading_size.options__1.label"
+            },
+            {
+              "value": "h1",
+              "label": "t:sections.all.heading_size.options__2.label"
+            },
+            {
+              "value": "h0",
+              "label": "t:sections.all.heading_size.options__3.label"
+            },
+            {
+              "value": "hxl",
+              "label": "t:sections.all.heading_size.options__4.label"
+            },
+            {
+              "value": "hxxl",
+              "label": "t:sections.all.heading_size.options__5.label"
+            }
+          ],
+          "default": "h1",
+          "label": "t:sections.all.heading_size.label"
+        },
+    {
+        "type": "image_picker",
+        "id": "img_1",
+        "label": "Gurrantee Icon"
+    },
+    {
+        "type": "richtext",
+        "id": "gurantee_text",
+        "label": "Gurrantee Text"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "See This Deal"
+    },
+    {
+      "type": "color",
+      "id": "discount_color",
+      "label": "Discount Text Color",
+      "default": "#e63946"
+    },
+    {
+      "type": "header",
+      "content": "Middle Product Badge"
+    },
+    {
+      "type": "text",
+      "id": "middle_label_text",
+      "label": "Middle Label Text",
+      "default": "Most Popular"
+    },
+    {
+      "type": "color",
+      "id": "middle_label_bg",
+      "label": "Middle Label Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "middle_label_color",
+      "label": "Middle Label Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "middle_bg",
+      "label": "Middle Product Background",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "middle_border_color",
+      "label": "Middle Product Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Third Product Badge"
+    },
+    {
+      "type": "text",
+      "id": "third_label_text",
+      "label": "Third Label Text",
+      "default": "Best Value"
+    },
+    {
+      "type": "color",
+      "id": "third_label_bg",
+      "label": "Third Label Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "third_label_color",
+      "label": "Third Label Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Product Block Styles"
+    },
+        {
+          "type": "color",
+          "id": "desc_bg",
+          "label": "Description Background",
+          "default": "#f5f5f5"
+        },
+        {
+          "type": "color",
+          "id": "desc_color",
+          "label": "Description Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Title Font Size",
+          "min": 14,
+          "max": 36,
+          "step": 1,
+          "default": 20
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Color",
+          "default": "#000000"
+        }
+  ],
+  "blocks": [
+    {
+      "type": "product_block",
+      "name": "Product Block",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Title",
+          "default": "Special Offer"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_desc",
+          "label": "Custom Description",
+          "default": "This product comes with amazing features and great value."
+        },
+        {
+          "type": "color",
+          "id": "card_bg",
+          "label": "Card Background Color",
+          "default": "#ffffff"
+        },
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Three Featured Products",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}
