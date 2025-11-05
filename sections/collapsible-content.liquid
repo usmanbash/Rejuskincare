@@ -13,6 +13,10 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .section-{{ section.id }}-padding .gradient {
+    background-attachment: scroll !important;
+  }
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
@@ -99,6 +103,36 @@
                 </details>
               </div>
             {%- endfor -%}
+            
+            {%- if section.settings.note_text != blank -%}
+              <div 
+                class="collapsible-content__note" 
+                style="background-color: {{ section.settings.note_bg_color }}; color: {{ section.settings.note_text_color }}; padding: 20px; margin-top: 20px; border-radius: 8px; border: 1px dashed {{ section.settings.note_text_color }};"
+              >
+                {%- if section.settings.note_heading != blank -%}
+                  <h3 style="margin-top: 0; margin-bottom: 10px; color: {{ section.settings.note_text_color }};">
+                    {{ section.settings.note_heading }}
+                  </h3>
+                {%- endif -%}
+                <div class="rte">
+                  {{ section.settings.note_text }}
+                </div>
+                {%- if section.settings.note_button_label != blank and section.settings.note_button_url != blank -%}
+                  <div style="margin-top: 15px;">
+                    <a 
+                      href="{{ section.settings.note_button_url }}" 
+                      class="button"
+                      style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background-color: {{ section.settings.note_text_color }}; color: {{ section.settings.note_bg_color }}; text-decoration: none; border-radius: 4px;"
+                    >
+                      {{ section.settings.note_button_label }}
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.5533 2.44672C13.4271 2.3215 13.2689 2.23347 13.0961 2.1923C12.9232 2.15114 12.7423 2.15843 12.5733 2.21339L2.81992 5.46672C2.63903 5.52404 2.47919 5.63367 2.36058 5.78178C2.24197 5.92989 2.16991 6.10983 2.1535 6.29887C2.13709 6.48791 2.17707 6.67757 2.26839 6.8439C2.35972 7.01023 2.49828 7.14576 2.66659 7.23339L6.71325 9.23339L8.71325 13.2934C8.79364 13.4523 8.91665 13.5857 9.06853 13.6787C9.22041 13.7717 9.39516 13.8207 9.57325 13.8201H9.63992C9.83065 13.806 10.0127 13.7349 10.1625 13.616C10.3123 13.4971 10.4229 13.3359 10.4799 13.1534L13.7799 3.42672C13.8388 3.25867 13.8488 3.07735 13.8087 2.90385C13.7686 2.73035 13.68 2.57182 13.5533 2.44672ZM3.23325 6.38672L11.7466 3.54672L7.01992 8.27339L3.23325 6.38672ZM9.61992 12.7667L7.72659 8.98005L12.4533 4.25339L9.61992 12.7667Z" fill="currentColor"/>
+                      </svg>
+                    </a>
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
           </div>
         </div>
       </div>
@@ -260,6 +294,45 @@
       ],
       "default": "image_second",
       "label": "t:sections.collapsible_content.settings.desktop_layout.label"
+    },
+    {
+      "type": "header",
+      "content": "Note Section"
+    },
+    {
+      "type": "text",
+      "id": "note_heading",
+      "label": "Note Heading",
+      "info": "Optional heading for the note section"
+    },
+    {
+      "type": "richtext",
+      "id": "note_text",
+      "label": "Note Text",
+      "info": "Add a note below the accordions"
+    },
+    {
+      "type": "text",
+      "id": "note_button_label",
+      "label": "Button Label",
+      "info": "Leave blank to hide button"
+    },
+    {
+      "type": "url",
+      "id": "note_button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "color",
+      "id": "note_bg_color",
+      "label": "Note Background Color",
+      "default": "#FFF9E6"
+    },
+    {
+      "type": "color",
+      "id": "note_text_color",
+      "label": "Note Text Color",
+      "default": "#000000"
     },
     {
       "type": "header",
