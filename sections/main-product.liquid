@@ -73,7 +73,7 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
-  <div class="page-width">
+  <div class="page-width custom-product-container">
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
@@ -470,6 +470,147 @@
                     </volume-pricing>
                   {%- endif -%}
                 </div>
+              {%- when 'bundle_selector' -%}
+                <div class="product__bundle-selector" {{ block.shopify_attributes }}>
+                  <div class="bundle-selector__header">
+                    <h3 class="bundle-selector__title">{{ block.settings.title }}</h3>
+                    <span class="bundle-selector__delivery">{{ block.settings.delivery_text }}</span>
+                  </div>
+                  <div class="bundle-selector__options">
+                    {%- if block.settings.bundle_1_title != blank -%}
+                      <div class="bundle-option bundle-option--selected">
+                        <input 
+                          type="radio" 
+                          name="bundle-select-{{ section.id }}" 
+                          id="bundle-1-{{ section.id }}"
+                          class="bundle-option__radio"
+                          checked
+                          data-quantity="{{ block.settings.bundle_1_quantity | default: 1 }}"
+                        >
+                        <label for="bundle-1-{{ section.id }}" class="bundle-option__label">
+                          {%- if block.settings.bundle_1_badge != blank -%}
+                            <span class="bundle-option__badge">{{ block.settings.bundle_1_badge }}</span>
+                          {%- endif -%}
+                          <div class="bundle-option__content">
+                            {%- if block.settings.bundle_1_image != blank -%}
+                              <div class="bundle-option__image">
+                                {{ block.settings.bundle_1_image | image_url: width: 120 | image_tag: loading: 'lazy' }}
+                              </div>
+                            {%- endif -%}
+                            <div class="bundle-option__details">
+                              <div class="bundle-option__text">
+                                <h4 class="bundle-option__title">{{ block.settings.bundle_1_title }}</h4>
+                                <div class="wrapper-flex">
+                                  <p class="bundle-option__subtitle">{{ block.settings.bundle_1_subtitle }}</p>
+                                  {%- if block.settings.bundle_1_save_text != blank -%}
+                                    <span class="bundle-option__save">{{ block.settings.bundle_1_save_text }}</span>
+                                  {%- endif -%}
+                                </div>
+                              </div>
+                              <div class="bundle-option__price">
+                                {%- assign qty = block.settings.bundle_1_quantity | default: 1 -%}
+                                {%- assign total = product.selected_or_first_available_variant.price | times: qty -%}
+                                {%- assign disc = block.settings.bundle_1_discount | default: 0 -%}
+                                {%- assign save = total | times: disc | divided_by: 100 -%}
+                                {%- assign final = total | minus: save -%}
+                                <span class="bundle-option__price-current">{{ final | money }}</span>
+                                <span class="bundle-option__price-compare">{{ total | money }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if block.settings.bundle_2_title != blank -%}
+                      <div class="bundle-option">
+                        <input 
+                          type="radio" 
+                          name="bundle-select-{{ section.id }}" 
+                          id="bundle-2-{{ section.id }}"
+                          class="bundle-option__radio"
+                          data-quantity="{{ block.settings.bundle_2_quantity | default: 3 }}"
+                        >
+                        <label for="bundle-2-{{ section.id }}" class="bundle-option__label">
+                          {%- if block.settings.bundle_2_badge != blank -%}
+                            <span class="bundle-option__badge">{{ block.settings.bundle_2_badge }}</span>
+                          {%- endif -%}
+                          <div class="bundle-option__content">
+                            {%- if block.settings.bundle_2_image != blank -%}
+                              <div class="bundle-option__image">
+                                {{ block.settings.bundle_2_image | image_url: width: 120 | image_tag: loading: 'lazy' }}
+                              </div>
+                            {%- endif -%}
+                            <div class="bundle-option__details">
+                              <div class="bundle-option__text">
+                                <h4 class="bundle-option__title">{{ block.settings.bundle_2_title }}</h4>
+                                <div class="wrapper-flex">
+                                  <p class="bundle-option__subtitle">{{ block.settings.bundle_2_subtitle }}</p>
+                                  {%- if block.settings.bundle_2_save_text != blank -%}
+                                    <span class="bundle-option__save">{{ block.settings.bundle_2_save_text }}</span>
+                                  {%- endif -%}
+                                </div>
+                              </div>
+                              <div class="bundle-option__price">
+                                {%- assign qty = block.settings.bundle_2_quantity | default: 3 -%}
+                                {%- assign total = product.selected_or_first_available_variant.price | times: qty -%}
+                                {%- assign disc = block.settings.bundle_2_discount | default: 0 -%}
+                                {%- assign save = total | times: disc | divided_by: 100 -%}
+                                {%- assign final = total | minus: save -%}
+                                <span class="bundle-option__price-current">{{ final | money }}</span>
+                                <span class="bundle-option__price-compare">{{ total | money }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if block.settings.bundle_3_title != blank -%}
+                      <div class="bundle-option">
+                        <input 
+                          type="radio" 
+                          name="bundle-select-{{ section.id }}" 
+                          id="bundle-3-{{ section.id }}"
+                          class="bundle-option__radio"
+                          data-quantity="{{ block.settings.bundle_3_quantity | default: 6 }}"
+                        >
+                        <label for="bundle-3-{{ section.id }}" class="bundle-option__label">
+                          {%- if block.settings.bundle_3_badge != blank -%}
+                            <span class="bundle-option__badge">{{ block.settings.bundle_3_badge }}</span>
+                          {%- endif -%}
+                          <div class="bundle-option__content">
+                            {%- if block.settings.bundle_3_image != blank -%}
+                              <div class="bundle-option__image">
+                                {{ block.settings.bundle_3_image | image_url: width: 120 | image_tag: loading: 'lazy' }}
+                              </div>
+                            {%- endif -%}
+                            <div class="bundle-option__details">
+                              <div class="bundle-option__text">
+                                <h4 class="bundle-option__title">{{ block.settings.bundle_3_title }}</h4>
+                                <div class="wrapper-flex">
+                                  <p class="bundle-option__subtitle">{{ block.settings.bundle_3_subtitle }}</p>
+                                  {%- if block.settings.bundle_3_save_text != blank -%}
+                                    <span class="bundle-option__save">{{ block.settings.bundle_3_save_text }}</span>
+                                  {%- endif -%}
+                                </div>
+                              </div>
+                              <div class="bundle-option__price">
+                                {%- assign qty = block.settings.bundle_3_quantity | default: 6 -%}
+                                {%- assign total = product.selected_or_first_available_variant.price | times: qty -%}
+                                {%- assign disc = block.settings.bundle_3_discount | default: 0 -%}
+                                {%- assign save = total | times: disc | divided_by: 100 -%}
+                                {%- assign final = total | minus: save -%}
+                                <span class="bundle-option__price-current">{{ final | money }}</span>
+                                <span class="bundle-option__price-compare">{{ total | money }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
               {%- when 'popup' -%}
                 <modal-opener
                   class="product-popup-modal__opener quick-add-hidden"
@@ -753,6 +894,271 @@
     </script>
   </div>
 </product-info>
+
+<style>
+  .custom-product-container{
+    padding: 0 15px;
+  }
+  .product__bundle-selector {
+    margin: 20px 0;
+    font-family: var(--font-body-family);
+  }
+
+  .bundle-selector__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .bundle-selector__title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin: 0;
+    font-family: var(--font-body-family);
+  }
+
+  .bundle-selector__delivery {
+    font-size: 12px;
+    color: #666;
+    font-family: var(--font-body-family);
+  }
+
+  .bundle-selector__options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bundle-option {
+    position: relative;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .bundle-option--selected,
+  .bundle-option:has(.bundle-option__radio:checked) {
+    border-color: #191817;
+    background-color: rgba(252, 249, 219, 1);
+  }
+
+  .bundle-option__radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .bundle-option__label {
+    display: block;
+    padding: 13px 20px 5px 10px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .bundle-option__label::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    background: white;
+  }
+
+  .bundle-option__radio:checked + .bundle-option__label::before {
+    border-color: #191817;
+  }
+
+  .bundle-option__radio:checked + .bundle-option__label::after {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #191817;
+  }
+
+  .bundle-option__badge {
+    position: absolute;
+    top: -9px;
+    right: 18px;
+    background-color: #000;
+    color: #fff;
+    padding: 6px 12px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    font-size: 11px;
+    font-weight: 400;
+    z-index: 10;
+    white-space: nowrap;
+    line-height: normal;
+    font-family: var(--font-body-family);
+  }
+
+  .bundle-option__badge::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -6px;
+    width: 6.5px;
+    height: 9px;
+    clip-path: path("M 6.53784 0 V 9 H 0 L 6.53784 0 Z");
+    background: linear-gradient(#000 0% 100%);
+  }
+  .wrapper-flex{
+    display:flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .bundle-option__badge::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -6.5px;
+    width: 6.5px;
+    height: 9px;
+    clip-path: path("M 0 0 V 9 H 6.53784 L 0 0 Z");
+    background: linear-gradient(#000 0% 100%);
+  }
+
+  .bundle-option__content {
+    display: flex;
+    gap: 16px;
+    margin-left: 36px;
+  }
+
+  .bundle-option__image {
+    flex-shrink: 0;
+  }
+
+  .bundle-option__image img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+  }
+
+  .bundle-option__details {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bundle-option__text {
+    flex: 1;
+  }
+
+  .bundle-option__title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    font-family: var(--font-body-family);
+  }
+
+  .bundle-option__subtitle {
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 0 0;
+    font-family: var(--font-body-family);
+  }
+
+  .bundle-option__save {
+    display: inline-block;
+    background: rgba(244, 236, 141, 1);
+    color: #000;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+    font-family: var(--font-body-family);
+  }
+
+  .bundle-option__price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .bundle-option__price-current {
+    font-size: 16px;
+    font-weight: 700;
+    color: #191817;
+    font-family: var(--font-body-family);
+    line-height: 1;
+  }
+
+  .bundle-option__price-compare {
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+    font-family: var(--font-body-family);
+  }
+
+  @media screen and (max-width: 749px) {
+    .bundle-selector__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .bundle-option__content {
+      flex-direction: column;
+    }
+
+    .bundle-option__details {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .bundle-option__price {
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const bundleSelector = document.querySelector('.product__bundle-selector');
+    if (!bundleSelector) return;
+    
+    const getQuantityInput = () => document.querySelector('#Quantity-{{ section.id }}') 
+      || document.querySelector('input[name="quantity"]');
+    
+    // Set initial quantity
+    const checkedRadio = bundleSelector.querySelector('.bundle-option__radio:checked');
+    if (checkedRadio) {
+      const qtyInput = getQuantityInput();
+      if (qtyInput) qtyInput.value = checkedRadio.dataset.quantity;
+    }
+    
+    // Handle bundle selection
+    bundleSelector.querySelectorAll('.bundle-option__radio').forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        bundleSelector.querySelectorAll('.bundle-option').forEach(opt => 
+          opt.classList.remove('bundle-option--selected')
+        );
+        e.target.closest('.bundle-option').classList.add('bundle-option--selected');
+        
+        const qtyInput = getQuantityInput();
+        if (qtyInput) {
+          qtyInput.value = e.target.dataset.quantity;
+          qtyInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
@@ -2136,6 +2542,159 @@
           "default": "t:sections.main-product.blocks.icon_with_text.settings.heading_3.default",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.heading_3.label",
           "info": "t:sections.main-product.blocks.icon_with_text.settings.heading.info"
+        }
+      ]
+    },
+    {
+      "type": "bundle_selector",
+      "name": "Bundle Selector",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "SELECT QUANTITY:"
+        },
+        {
+          "type": "text",
+          "id": "delivery_text",
+          "label": "Delivery Text",
+          "default": "DELIVERY EVERY 2 MONTHS"
+        },
+        {
+          "type": "header",
+          "content": "Bundle Option 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "bundle_1_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "bundle_1_title",
+          "label": "Title",
+          "default": "Solo - \"Just for Me\""
+        },
+        {
+          "type": "text",
+          "id": "bundle_1_subtitle",
+          "label": "Subtitle",
+          "default": "1 Month Trial Stick"
+        },
+        {
+          "type": "text",
+          "id": "bundle_1_save_text",
+          "label": "Save Text",
+          "default": "YOU SAVE 16%"
+        },
+        {
+          "type": "text",
+          "id": "bundle_1_badge",
+          "label": "Badge"
+        },
+        {
+          "type": "number",
+          "id": "bundle_1_quantity",
+          "label": "Quantity",
+          "default": 1
+        },
+        {
+          "type": "number",
+          "id": "bundle_1_discount",
+          "label": "Discount Percentage",
+          "default": 16
+        },
+        {
+          "type": "header",
+          "content": "Bundle Option 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "bundle_2_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "bundle_2_title",
+          "label": "Title",
+          "default": "Trinity - \"For You, & Your Friends\""
+        },
+        {
+          "type": "text",
+          "id": "bundle_2_subtitle",
+          "label": "Subtitle",
+          "default": "Dermatologist's Recommendation"
+        },
+        {
+          "type": "text",
+          "id": "bundle_2_save_text",
+          "label": "Save Text",
+          "default": "YOU SAVE 36%"
+        },
+        {
+          "type": "text",
+          "id": "bundle_2_badge",
+          "label": "Badge",
+          "default": "Most Popular"
+        },
+        {
+          "type": "number",
+          "id": "bundle_2_quantity",
+          "label": "Quantity",
+          "default": 3
+        },
+        {
+          "type": "number",
+          "id": "bundle_2_discount",
+          "label": "Discount Percentage",
+          "default": 36
+        },
+        {
+          "type": "header",
+          "content": "Bundle Option 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "bundle_3_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "bundle_3_title",
+          "label": "Title",
+          "default": "Squad - \"Your Crew's Secret\""
+        },
+        {
+          "type": "text",
+          "id": "bundle_3_subtitle",
+          "label": "Subtitle",
+          "default": "Maximum Results + Biggest Savings"
+        },
+        {
+          "type": "text",
+          "id": "bundle_3_save_text",
+          "label": "Save Text",
+          "default": "YOU SAVE 46%"
+        },
+        {
+          "type": "text",
+          "id": "bundle_3_badge",
+          "label": "Badge",
+          "default": "Best Value"
+        },
+        {
+          "type": "number",
+          "id": "bundle_3_quantity",
+          "label": "Quantity",
+          "default": 6
+        },
+        {
+          "type": "number",
+          "id": "bundle_3_discount",
+          "label": "Discount Percentage",
+          "default": 46
         }
       ]
     }
