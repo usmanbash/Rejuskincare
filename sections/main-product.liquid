@@ -471,6 +471,11 @@
                   {%- endif -%}
                 </div>
               {%- when 'bundle_selector' -%}
+                {%- if block.settings.hide_quantity_selector -%}
+                  <style>
+                    .product-form__quantity { display: none !important; }
+                  </style>
+                {%- endif -%}
                 <div class="product__bundle-selector" {{ block.shopify_attributes }}>
                   <div class="bundle-selector__header">
                     <h3 class="bundle-selector__title">{{ block.settings.title }}</h3>
@@ -2695,6 +2700,17 @@
           "id": "bundle_3_discount",
           "label": "Discount Percentage",
           "default": 46
+        },
+        {
+          "type": "header",
+          "content": "Display Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_quantity_selector",
+          "label": "Hide Quantity Selector",
+          "default": false,
+          "info": "Hide the default quantity selector when using bundle options"
         }
       ]
     }
