@@ -112,12 +112,24 @@
           font-weight: 300;
           font-style: normal;
           font-display: swap;
+          ascent-override: 90%;
+          descent-override: 10%;
         }
         @font-face {
           font-family: 'Alliance';
           src: url('{{ "Alliance No.1 Medium.otf" | asset_url }}') format('opentype');
           font-weight: bold;
+          ascent-override: 90%;
+          descent-override: 10%;
         }
+        @font-face {
+          font-family: 'Alliance';
+          src: url('{{ "Alliance No.1 Regular.otf" | asset_url }}') format('opentype');
+          font-weight: 500;
+          ascent-override: 90%;
+          descent-override: 10%;
+        }
+        
         
       
       :root {

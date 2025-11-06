@@ -154,7 +154,7 @@
       "custom_css": [
         ".slider-button {display: none !important;}",
         ".thumbnail,img {border-radius: 8px;}",
-        ".accordion__title{font-size: 16px; font-family: var(--font-body-family); letter-spacing: 0; font-weight: bold;}",
+        ".accordion__title{font-size: 16px; font-family: var(--font-body-family); letter-spacing: 0; font-weight: 500;}",
         ".product__title {margin-top: 0; font-size: 32px;}",
         ".product__tax {display: none;}",
         ".product__title h1 {font-size: 32px;}",

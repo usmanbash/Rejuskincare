@@ -37,6 +37,79 @@
         padding-bottom: {{ section.settings.padding_bottom }}px;
       }
     }
+
+    .doctor-testimonial {
+      background: #FAFAFA;
+      padding: 15px;
+      padding-top:0;
+      border-radius: 12px;
+      margin-top: 15px;
+      display: flex;
+      align-items: end;
+      gap: 20px;
+      padding-right: 0;
+      padding-bottom: 0;
+    }
+
+    .doctor-testimonial__content {
+      flex: 1;
+    }
+
+    .doctor-testimonial__quote {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #333;
+      margin: 0 0 16px 0;
+      font-style: italic;
+    }
+
+    .doctor-testimonial__info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 24px;
+    }
+
+    .doctor-testimonial__name {
+      margin: 0;
+      font-weight: 600;
+      font-size: 14px;
+      color: #1a1a1a;
+    }
+
+    .doctor-testimonial__title {
+      margin: 0;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .doctor-testimonial__image-wrapper {
+      flex-shrink: 0;
+      width: 133px;
+      height: 148px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .doctor-testimonial__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .doctor-testimonial__info-content{
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #EDE5DB;
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+
+    @media screen and (max-width: 991px) {
+      .doctor-testimonial {
+        display: none;
+      }
+    }
   {%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
@@ -75,8 +148,45 @@
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width custom-product-container">
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
-      <div class="grid__item product__media-wrapper">
+      <div class="grid__item product__media-wrapper{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}">
         {% render 'product-media-gallery', variant_images: variant_images %}
+        
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'doctor_testimonial' -%}
+            <div class="doctor-testimonial" {{ block.shopify_attributes }}>
+              <div class="doctor-testimonial__content">
+                <p class="doctor-testimonial__quote">
+                  "{{ block.settings.quote }}"
+                </p>
+                <div class="doctor-testimonial__info">
+                  <div class="doctor-testimonial__info-content">
+                    <p class="doctor-testimonial__name">
+                      {{ block.settings.doctor_name }}
+                    </p>
+                    <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle opacity="0.2" cx="2" cy="2" r="2" fill="#3C1C13"/>
+                    </svg>
+                    <p class="doctor-testimonial__title">
+                      {{ block.settings.doctor_title }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {%- if block.settings.doctor_image != blank -%}
+                <div class="doctor-testimonial__image-wrapper">
+                  <img 
+                    src="{{ block.settings.doctor_image | image_url: width: 240 }}"
+                    alt="{{ block.settings.doctor_name }}"
+                    loading="lazy"
+                    width="120"
+                    height="120"
+                    class="doctor-testimonial__image"
+                  >
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <section
@@ -903,6 +1013,7 @@
 <style>
   .custom-product-container{
     padding: 0 15px;
+    overflow: visible;
   }
   .product__bundle-selector {
     margin: 20px 0;
@@ -1160,8 +1271,25 @@
           qtyInput.value = e.target.dataset.quantity;
           qtyInput.dispatchEvent(new Event('change', { bubbles: true }));
         }
+        
+        // Update price badge with save text
+        const saveTextElement = e.target.closest('.bundle-option').querySelector('.bundle-option__save');
+        const priceBadge = document.querySelector('.price__badge-sale');
+        if (saveTextElement && priceBadge) {
+          priceBadge.textContent = saveTextElement.textContent.trim();
+        }
       });
     });
+    
+    // Set initial price badge text if bundle is pre-selected
+    const initialCheckedRadio = bundleSelector.querySelector('.bundle-option__radio:checked');
+    if (initialCheckedRadio) {
+      const initialSaveText = initialCheckedRadio.closest('.bundle-option').querySelector('.bundle-option__save');
+      const priceBadge = document.querySelector('.price__badge-sale');
+      if (initialSaveText && priceBadge) {
+        priceBadge.textContent = initialSaveText.textContent.trim();
+      }
+    }
   });
 </script>
 
@@ -1173,6 +1301,36 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "doctor_testimonial",
+      "name": "Doctor Testimonial",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Any woman over 40 can benefit from the RejuBalm, and get smoother, brighter eyes, even if other creams didn't work before."
+        },
+        {
+          "type": "text",
+          "id": "doctor_name",
+          "label": "Doctor Name",
+          "default": "Dr. Blane Schilling M.D."
+        },
+        {
+          "type": "text",
+          "id": "doctor_title",
+          "label": "Doctor Title",
+          "default": "Leading Anti-Aging Doctor"
+        },
+        {
+          "type": "image_picker",
+          "id": "doctor_image",
+          "label": "Doctor Image"
+        }
+      ]
     },
     {
       "type": "text",
