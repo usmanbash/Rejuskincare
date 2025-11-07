@@ -74,11 +74,20 @@
           </span>
         </button>
       </div>
+      {% comment %} timer block  {% endcomment %}
       <div class="time_block">
         <img src="https://cdn.shopify.com/s/files/1/0927/4166/5141/files/clock.png?v=1762536730" width="15px" />
         Your cart is reserved for:
         <span class="timer_block" data-time-seconds="120">120</span>
       </div>
+      {% comment %} Free shipping bar  {% endcomment %}
+       <div class="free_shipping_wrapper">
+        <span>🚚  Only €[X] away from FREE shipping</span>
+        <div class="free_shipping_bar">
+          <div class="free_shipping_progress_line"></div>
+          <div class="free_shipping_dot_progress"></div>
+        </div>
+       </div>
       <cart-drawer-items {% if cart == empty %} class=" is-empty" {% endif %} >
         <form
           action="{{ routes.cart_url }}"
