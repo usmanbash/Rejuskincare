@@ -29,7 +29,8 @@
     transform: translate(100%);
     transition: transform var(--duration-default) ease;
 }
-
+div#CartDrawer {
+    padding: 10px;
 }
 
 .drawer__inner-empty {
