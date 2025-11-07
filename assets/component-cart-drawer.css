@@ -16,21 +16,18 @@
 }
 
 .drawer__inner {
-    height: 100%;
-    border-radius: 10px;
-    width: 500px;
-    max-width: calc(100vw - 3rem);
-    padding: 0 1.5rem;
-    border: .1rem solid rgba(var(--color-foreground), .2);
-    border-right: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transform: translate(100%);
-    transition: transform var(--duration-default) ease;
-}
-div#CartDrawer {
-    padding: 10px;
+  height: 100%;
+  width: 40rem;
+  max-width: calc(100vw - 3rem);
+  padding: 0 1.5rem;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+  border-right: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--duration-default) ease;
+  
 }
 
 .drawer__inner-empty {
