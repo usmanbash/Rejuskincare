@@ -608,6 +608,7 @@ button.drawer__close svg {
     width: 11px;
     color: black;
 }
+{% comment %} timer {% endcomment %}
 .time_block {
     display: flex;
     align-items: center;
@@ -626,5 +627,50 @@ button.drawer__close svg {
 
 span.timer_block {
     color: #F04438;
+}
+{% comment %} shipping bar {% endcomment %}
+ .free_shipping_wrapper {
+    max-width: 80%;
+    width: 100%;
+    margin-inline: auto;
+    font-size: 14px;
+    font-weight: 600 !important;
+    text-align: center;
+    padding-top: 8px;
+    color: #1A1A1A;
+}
+
+.free_shipping_bar {
+    height: 10px;
+    width: 100%;
+    background: #F6F1EC;
+    margin-block: 7px 15px;
+    border-radius: 100px;
+    position: relative;
+}
+
+.free_shipping_progress_line {
+    display: block !important;
+    height: 100%;
+    width: 66%;
+    background: #1A1A1A;
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 100px;
+}
+
+.free_shipping_dot_progress {
+    display: block !important;
+    height: 16px;
+    width: 16px;
+    background: #1A1A1A;
+    position: absolute;
+    left: 66%;
+    right: 0;
+    border-radius: 100px;
+    border: 2px solid white;
+    top: -3px;
+    transform: translateX(-50%);
 }
 </style>
