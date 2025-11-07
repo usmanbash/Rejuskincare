@@ -23,7 +23,9 @@
 .three-icon-text {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-left: 5px;
 }
 
 .text-icon-block {
