@@ -74,6 +74,11 @@
           </span>
         </button>
       </div>
+      <div class="time_block">
+        <img src="https://cdn.shopify.com/s/files/1/0927/4166/5141/files/clock.png?v=1762536730" width="15px" />
+        Your cart is reserved for:
+        <span class="timer_block" data-time-seconds="120">120</span>
+      </div>
       <cart-drawer-items {% if cart == empty %} class=" is-empty" {% endif %} >
         <form
           action="{{ routes.cart_url }}"
