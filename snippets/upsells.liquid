@@ -97,7 +97,7 @@ document.addEventListener('click', function(e) {
     return;
   }
 
-  // Add product to cart
+  // Add the product to cart
   fetch('/cart/add.js', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -107,25 +107,21 @@ document.addEventListener('click', function(e) {
   .then(() => {
     console.log('Gift product added to cart.');
 
-    // Fetch updated cart HTML (Dawn theme drawer)
-    fetch('/cart?view=drawer')
-      .then(res => res.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const drawerContent = doc.querySelector('.drawer__inner_box');
+    // Trigger Dawn's native cart update event
+    const event = new Event('cart:refresh');
+    document.dispatchEvent(event);
 
-        if (drawerContent) {
-          document.querySelector('.drawer__inner_box').innerHTML = drawerContent.innerHTML;
+    // Open the drawer if not already open
+    const drawer = document.querySelector('.drawer');
+    if (drawer && !drawer.classList.contains('is-open')) {
+      drawer.classList.add('is-open');
+    }
 
-          // Optionally open the drawer
-          document.body.classList.add('drawer-open');
-        }
-      });
+    // Optional toast
+    alert('Gift product added to cart!');
   })
   .catch(err => console.error('Failed to add gift product:', err));
 });
-
 
 </script>
     <style>
