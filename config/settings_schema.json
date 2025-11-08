@@ -1449,6 +1449,11 @@
         "id": "cart_color_scheme",
         "label": "t:sections.all.colors.label",
         "default": "scheme-1"
+      },
+      {
+        "type": "collection",
+        "id": "collection_handle",
+        "label": "Upsell Collection"
       }
     ]
   }
