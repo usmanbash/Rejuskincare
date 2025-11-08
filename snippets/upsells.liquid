@@ -46,10 +46,12 @@
               <div class="upsell__info">
                 <h3 class="gift_title">{{ gift.title }}</h3>
                 <span class="gift_price">
+                  {{ gift.price | money }}
                   {% if gift.compare_at_price > gift.price %}
                     <s>{{ gift.compare_at_price | money }}</s>
+                    {% assign you_save = gift.price | divided_by: gift.compare_at_price | times: 100 %}
+                    <span class="you_save"> {{ you_save }} </span>
                   {% endif %}
-                  {{ gift.price | money }}
                 </span>
               </div>
               <button class="add_cart" p_id="{{ gift.selected_or_first_available_variant.id }}">+ Add</button>
@@ -162,6 +164,7 @@
 
 span.gift_price {
   display: block;
+      color: #141414;
 }
 
 /* =======================
