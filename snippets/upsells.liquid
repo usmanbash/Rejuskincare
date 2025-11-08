@@ -101,7 +101,7 @@
     dataType: 'json',
     success: function () {
       console.log('Gift product added to cart.');
-
+      document.dispatchEvent(new CustomEvent('cart:refresh'));
       // Refresh cart drawer content
       $(".drawer__inner_box").load(location.href + " .drawer__inner_box", function () {
         console.log("Cart updated successfully.");
