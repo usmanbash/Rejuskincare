@@ -52,10 +52,7 @@
                   {{ gift.price | money }}
                 </span>
               </div>
-
-              <div class="optionss">
-                <button class="add_cart" p_id="{{ gift.selected_or_first_available_variant.id }}">+ Add</button>
-              </div>
+              <button class="add_cart" p_id="{{ gift.selected_or_first_available_variant.id }}">+ Add</button>
             </div>
           </div>
         {% endunless %}
