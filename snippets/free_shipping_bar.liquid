@@ -1,10 +1,11 @@
-{% assign free_shipping_goal = 60.00 %}
-{% assign cart_total_cents = cart.total_price %}
-{% assign cart_total = cart_total_cents | times: 0.01 | round: 2 %}
+{% assign free_shipping_goal = 60 %}
+{% assign cart_total = cart.total_price | divided_by: 100.0 %}
 {% assign amount_left = free_shipping_goal | minus: cart_total %}
+
 {% if amount_left < 0 %}
   {% assign amount_left = 0 %}
 {% endif %}
+
 {% assign percent = cart_total | divided_by: free_shipping_goal | times: 100 %}
 {% if percent > 100 %}
   {% assign percent = 100 %}
@@ -12,7 +13,7 @@
 
 <div class="free_shipping_wrapper">
   {% if amount_left > 0 %}
-    <span>🚚 Only {{ amount_left | money }} away from FREE shipping!</span>
+    <span>🚚 Only {{ amount_left | round: 2 | prepend: '$' }} away from FREE shipping!</span>
   {% else %}
     <span>🎉 You’ve unlocked FREE shipping!</span>
   {% endif %}
