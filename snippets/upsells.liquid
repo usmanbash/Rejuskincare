@@ -103,9 +103,10 @@
       console.log('Gift product added to cart.');
       document.dispatchEvent(new CustomEvent('cart:refresh'));
       // Refresh cart drawer content
-      $("#div#CartDrawer_box").load(location.href + " .drawer__inner", function () {
+      $("div#CartDrawer_box").load(location.href + " .drawer__inner", function () {
         console.log("Cart updated successfully.");
       });
+      
     },
     error: function (xhr) {
       console.error('Failed to add gift product:', xhr.responseText);
