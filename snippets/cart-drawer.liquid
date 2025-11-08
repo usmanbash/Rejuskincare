@@ -20,6 +20,7 @@
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
     <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
+    <div id="CartDrawer_box">
     <div
       class="drawer__inner gradient color-{{ settings.cart_color_scheme }}"
       role="dialog"
@@ -626,6 +627,7 @@
                       </div>
                   </div>
       </div>
+    </div>
     </div>
   </div>
 </cart-drawer>
