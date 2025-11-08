@@ -980,3 +980,54 @@ h2.totals__total {
 
 
 </style>
+
+<script>
+(function() {
+  let timeLeft = -1;
+  let countdown;
+
+  function clearCart() {
+    fetch('/cart/clear.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(() => {
+      window.location.reload();
+    })
+    .catch(err => console.error("Failed to clear cart:", err));
+  }
+
+  function updateTimer() {
+    const timerEl = document.querySelector('.timer_block');
+    if (!timerEl) return;
+
+    if (timeLeft < 0) {
+      timeLeft = parseInt(timerEl.getAttribute('data-time-seconds')) || 600; // default 10 min
+    }
+
+    const m = Math.floor(timeLeft / 60);
+    const s = timeLeft % 60;
+    const timeString = m + ':' + (s < 10 ? '0' + s : s);
+
+    timerEl.textContent = timeString;
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      timerEl.textContent = 'Expired';
+      clearCart();
+    }
+
+    timeLeft--;
+  }
+
+  // Initial start
+  updateTimer();
+  countdown = setInterval(updateTimer, 1000);
+
+  // Reset timer when product is added via AJAX
+  document.addEventListener('product-ajax:added', () => {
+    timeLeft = -1;
+    updateTimer();
+  });
+})();
+</script>
