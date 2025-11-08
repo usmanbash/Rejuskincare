@@ -1,7 +1,8 @@
-{% assign free_shipping_goal = 60.00  %}
-{% assign cart_total = cart.total_price | divided_by: 100.0 %}
-{% assign amount_left = free_shipping_goal | minus: cart_total %}
-{% assign percent = cart_total | divided_by: free_shipping_goal | times: 100 | round %}
+{% assign free_shipping_goal = 60.00 %}
+{% assign cart_total = cart.total_price | divided_by: 100.0 | round: 2 %}
+{% assign amount_left = free_shipping_goal | minus: cart_total | at_least: 0 %}
+{% assign percent = cart_total | divided_by: free_shipping_goal | times: 100 | round: 1 %}
+{% assign percent = percent | at_most: 100 %}
 
 <div class="free_shipping_wrapper">
   {% if amount_left > 0 %}
@@ -13,11 +14,11 @@
   <div class="free_shipping_bar" data-full-bar-value="{{ free_shipping_goal }}">
     <div 
       class="free_shipping_progress_line" 
-      style="width: {{ percent | at_most: 100 }}%;"
+      style="width: {{ percent }}%;"
     ></div>
     <div 
       class="free_shipping_dot_progress" 
-      style="left: {{ percent | at_most: 100 }}%;"
+      style="left: {{ percent }}%;"
     ></div>
   </div>
 </div>
