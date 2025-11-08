@@ -1,3 +1,4 @@
+{% if settings.collection_handle %}
 <div class="upsell_wrapper">
   <div class="h-stack justify-between gap-4 top_upsell_heading">
     <p>{{ heading }}</p>
@@ -26,7 +27,7 @@
   </div>
 
   <div class="upsell_slider">
-    {% assign gift_collection = collections[collection_handle] %}
+    {% assign gift_collection = collections[settings.collection_handle] %}
 
     {% if gift_collection and gift_collection.products.size > 0 %}
       {% for gift in gift_collection.products %}
@@ -72,6 +73,7 @@
     {% endif %}
   </div>
 </div>
+{% endif %}
 <script>
     $(document).ready(function () {
         $(".drawer__inner_box").load(location.href + " .drawer__inner_box", function () {
