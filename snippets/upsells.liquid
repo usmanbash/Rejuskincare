@@ -50,9 +50,9 @@
                   {% if gift.compare_at_price > gift.price %}
                     <s>{{ gift.compare_at_price | money }}</s>
                     {% if gift.compare_at_price > gift.price %}
-  {% assign you_save = gift.compare_at_price | minus: gift.price | times: 100 | divided_by: gift.compare_at_price %}
-  <span class="you_save">{{ you_save | round: 0 }}%</span>
-{% endif %}
+                    {% assign you_save = gift.compare_at_price | minus: gift.price | times: 100 | divided_by: gift.compare_at_price %}
+                    <span class="you_save">YOU SAVE{{ you_save | round: 0 }}%</span>
+                    {% endif %}
                   {% endif %}
                 </span>
               </div>
