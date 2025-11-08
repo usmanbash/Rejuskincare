@@ -97,50 +97,25 @@ document.addEventListener('click', function(e) {
     return;
   }
 
-  // Step 1: Add the product via AJAX
+  // Add the product via AJAX
   fetch('/cart/add.js', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id: productId, quantity: 1 })
   })
   .then(response => response.json())
-  .then(() => {
-    console.log('Gift product added to cart.');
+  .then(item => {
+    console.log('Gift product added to cart:', item);
 
-    // Step 2: Fetch updated cart JSON
-    return fetch('/cart.js')
-      .then(res => res.json());
+    // Dispatch Dawn's native cart event
+    const event = new CustomEvent('cart:refresh', { detail: { addedItem: item } });
+    document.dispatchEvent(event);
+
+    // Open the drawer manually if needed
+    const drawerTrigger = document.querySelector('[data-drawer-open]'); // Usually Dawn has this
+    if (drawerTrigger) drawerTrigger.click();
   })
-  .then(cart => {
-    // Step 3: Update cart drawer HTML manually
-    const drawerItemsContainer = document.querySelector('.drawer__inner_box');
-    if (!drawerItemsContainer) {
-      console.error('Cart drawer container not found.');
-      return;
-    }
-
-    // Clear existing items
-    drawerItemsContainer.innerHTML = '';
-
-    // Loop through cart items
-    cart.items.forEach(item => {
-      const itemHTML = `
-        <div class="drawer__item">
-          <img src="${item.image}" alt="${item.title}" width="60" height="60">
-          <div class="drawer__item-info">
-            <span class="drawer__item-title">${item.product_title}</span>
-            <span class="drawer__item-qty">Qty: ${item.quantity}</span>
-            <span class="drawer__item-price">${Shopify.formatMoney(item.final_price)}</span>
-          </div>
-        </div>
-      `;
-      drawerItemsContainer.insertAdjacentHTML('beforeend', itemHTML);
-    });
-
-    // Step 4: Open the drawer
-    document.body.classList.add('drawer-open');
-  })
-  .catch(err => console.error('Failed to add product or update drawer:', err));
+  .catch(err => console.error('Failed to add gift product:', err));
 });
 
 </script>
