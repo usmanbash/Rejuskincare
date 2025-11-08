@@ -497,8 +497,12 @@
           </div>
 
           <div class="totals" role="status">
-            <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
-            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+            <h2 class="totals__total">Total Price (incl. taxes)</h2>
+            <div class="total_calculations">
+              <span class="cart_total_compare_price_minus_price"></span>
+              <span class="cart_total_compare_price"></span>
+              <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+            </div>
           </div>
 
           <small class="tax-note caption-large rte">
