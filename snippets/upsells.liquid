@@ -86,27 +86,7 @@
     $slider.animate({ scrollLeft: $slider.scrollLeft() - $slider.width() }, 300);
   });
 
-  // Add to cart with selected variant
-  $(document).on('click', '.add_cart', function () {
-    const $wrapper = $(this).closest('.flex_box');
-    const productId = $wrapper.find('.variant_select').val();
-
-    if (!productId) {
-      alert('Please select a variant.');
-      return;
-    }
-
-    $.post('/cart/add.js', { id: productId, quantity: 1 })
-      .done(function () {
-        console.log('Gift product added to cart.');
-         $(".drawer__inner_box").load(location.href + " .drawer__inner_box", function () {
-          console.log("Cart updated successfully.");
-        }); 
-      })
-      .fail(function () {
-        console.error('Failed to add gift product.');
-      });
-  });
+  
 
 });
 
