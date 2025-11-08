@@ -86,36 +86,34 @@
     $slider.animate({ scrollLeft: $slider.scrollLeft() - $slider.width() }, 300);
   });
 
-});
+  $(document).on('click', '.add_cart', function () {
+  const productId = $(this).attr('p_id');
 
-document.addEventListener('click', function(e) {
-  if (!e.target.classList.contains('add_cart')) return;
-
-  const productId = e.target.getAttribute('p_id');
   if (!productId) {
     alert('Product ID missing.');
     return;
   }
 
-  // Add the product via AJAX
-  fetch('/cart/add.js', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id: productId, quantity: 1 })
-  })
-  .then(response => response.json())
-  .then(item => {
-    console.log('Gift product added to cart:', item);
+  $.ajax({
+    type: 'POST',
+    url: '/cart/add.js',
+    data: { id: productId, quantity: 1 },
+    dataType: 'json',
+    success: function () {
+      console.log('Gift product added to cart.');
+      document.dispatchEvent(new CustomEvent('cart:refresh'));
+      // Refresh cart drawer content
+      $(".drawer__inner_box").load(location.href + " .drawer__inner_box", function () {
+        console.log("Cart updated successfully.");
+      });
+    },
+    error: function (xhr) {
+      console.error('Failed to add gift product:', xhr.responseText);
+    }
+  });
+});
 
-    // Dispatch Dawn's native cart event
-    const event = new CustomEvent('cart:refresh', { detail: { addedItem: item } });
-    document.dispatchEvent(event);
 
-    // Open the drawer manually if needed
-    const drawerTrigger = document.querySelector('[data-drawer-open]'); // Usually Dawn has this
-    if (drawerTrigger) drawerTrigger.click();
-  })
-  .catch(err => console.error('Failed to add gift product:', err));
 });
 
 </script>
