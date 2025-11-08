@@ -161,9 +161,9 @@ cart-drawer {
 }
 
 .cart-drawer__form {
-  flex-grow: 1;
+  /* flex-grow: 1;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
 }
 
 .cart-drawer__collection {
