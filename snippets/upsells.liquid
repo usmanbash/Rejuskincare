@@ -97,7 +97,7 @@ document.addEventListener('click', function(e) {
     return;
   }
 
-  // Add product via AJAX
+  // Step 1: Add product to cart
   fetch('/cart/add.js', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -107,26 +107,29 @@ document.addEventListener('click', function(e) {
   .then(() => {
     console.log('Gift product added to cart.');
 
-    // Refresh the cart JSON
-    fetch('/cart.js')
-      .then(res => res.json())
-      .then(cart => {
-        // Update cart drawer using Dawn's theme.CartDrawer object
-        if (window.theme && window.theme.CartDrawer) {
-          // Initialize the drawer if not already
-          if (!window.cartDrawerInstance) {
-            window.cartDrawerInstance = new theme.CartDrawer();
-          }
-
-          // Update drawer contents and open it
-          window.cartDrawerInstance.renderContents(cart);
-          window.cartDrawerInstance.open();
-        } else {
-          console.error('Dawn CartDrawer object not found');
-        }
-      });
+    // Step 2: Fetch the latest cart HTML snippet (Dawn cart drawer)
+    return fetch('/cart?view=drawer') // Make sure you have a drawer view in cart.liquid
+      .then(res => res.text());
   })
-  .catch(err => console.error('Failed to add gift product:', err));
+  .then(html => {
+    // Step 3: Replace the drawer content
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const newDrawerContent = doc.querySelector('.drawer__inner_box');
+
+    if (newDrawerContent) {
+      const currentDrawer = document.querySelector('.drawer__inner_box');
+      if (currentDrawer) {
+        currentDrawer.innerHTML = newDrawerContent.innerHTML;
+
+        // Step 4: Open the drawer
+        document.body.classList.add('drawer-open');
+      }
+    } else {
+      console.error('Drawer content not found in fetched HTML.');
+    }
+  })
+  .catch(err => console.error('Failed to add product and refresh cart drawer:', err));
 });
 
 </script>
