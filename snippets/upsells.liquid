@@ -86,7 +86,33 @@
     $slider.animate({ scrollLeft: $slider.scrollLeft() - $slider.width() }, 300);
   });
 
-  
+  $(document).on('click', '.add_cart', function () {
+  const productId = $(this).attr('p_id');
+
+  if (!productId) {
+    alert('Product ID missing.');
+    return;
+  }
+
+  $.ajax({
+    type: 'POST',
+    url: '/cart/add.js',
+    data: { id: productId, quantity: 1 },
+    dataType: 'json',
+    success: function () {
+      console.log('Gift product added to cart.');
+
+      // Refresh cart drawer content
+      $(".drawer__inner_box").load(location.href + " .drawer__inner_box", function () {
+        console.log("Cart updated successfully.");
+      });
+    },
+    error: function (xhr) {
+      console.error('Failed to add gift product:', xhr.responseText);
+    }
+  });
+});
+
 
 });
 
