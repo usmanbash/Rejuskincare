@@ -82,10 +82,10 @@
       </div>
       {% comment %} Free shipping bar  {% endcomment %}
        <div class="free_shipping_wrapper">
-        <span>🚚  Only €[X] away from FREE shipping</span>
-        <div class="free_shipping_bar">
-          <div class="free_shipping_progress_line"></div>
-          <div class="free_shipping_dot_progress"></div>
+        <span>🚚  Only $[X] away from FREE shipping</span>
+        <div class="free_shipping_bar" data-full-bar-value="60">
+          <div class="free_shipping_progress_line" style=" width: 66%; "></div>
+          <div class="free_shipping_dot_progress" style=" left: 66%; "></div>
         </div>
        </div>
       <cart-drawer-items {% if cart == empty %} class=" is-empty" {% endif %} >
