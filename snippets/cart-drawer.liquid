@@ -556,7 +556,7 @@
             {% endif %}
           >
            <img src="https://cdn.shopify.com/s/files/1/0927/4166/5141/files/Lock-2--Streamline-Ultimate_f906a079-3713-4b14-9c5a-8ada505e4265.svg?v=1762622089"> 
-           {{ 'sections.cart.checkout' | t }} <span>{{ cart.total_price }}</span>
+           {{ 'sections.cart.checkout' | t }} <span>{{ cart.total_price | money}}</span>
           </button>
         </div>
       </div>
