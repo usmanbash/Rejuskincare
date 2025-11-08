@@ -31,13 +31,13 @@
 
     {% if gift_collection and gift_collection.products.size > 0 %}
       {% for gift in gift_collection.products %}
-        {% assign gift_in_cart = false %}
+        {% comment %} {% assign gift_in_cart = false %}
         {% for item in cart.items %}
           {% if item.product_id == gift.id %}
             {% assign gift_in_cart = true %}
             {% break %}
           {% endif %}
-        {% endfor %}
+        {% endfor %} {% endcomment %}
 
         {% unless gift_in_cart %}
           <div class="flex_box" {% if cart == empty %}style="display:none;"{% endif %}>
