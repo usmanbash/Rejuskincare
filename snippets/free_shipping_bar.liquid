@@ -1,4 +1,4 @@
-{% assign free_shipping_goal = 60.00 | times: 100 %}
+{% assign free_shipping_goal = 60.00  %}
 {% assign cart_total = cart.total_price | divided_by: 100.0 %}
 {% assign amount_left = free_shipping_goal | minus: cart_total %}
 {% assign percent = cart_total | divided_by: free_shipping_goal | times: 100 | round %}
