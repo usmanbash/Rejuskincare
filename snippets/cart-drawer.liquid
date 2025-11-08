@@ -497,35 +497,37 @@
           </div>
 
           <div class="totals" role="status">
-            <h2 class="totals__total">Total Price (incl. taxes)</h2>
+  <h2 class="totals__total">Total Price (incl. taxes)</h2>
 
-            <div class="total_calculations">
-              {% assign compare_total = 0 %}
-              {% assign total_price = cart.total_price %}
-              
-              {% for item in cart.items %}
-                {% if item.original_price > item.final_price %}
-                  {% assign item_compare = item.original_price | times: item.quantity %}
-                  {% assign compare_total = compare_total | plus: item_compare %}
-                {% endif %}
-              {% endfor %}
+  {% assign compare_total = 0 %}
+  {% assign total_price = cart.total_price %}
 
-              {% if compare_total > total_price %}
-                {% assign savings = compare_total | minus: total_price %}
-                {% assign savings_percentage = savings | times: 100 | divided_by: compare_total %}
-                <span class="cart_total_compare_price_minus_price_savings_percentage">
-                  You saved {{ savings | money }} ({{ savings_percentage | round: 0 }}%)
-                </span>
-                <span class="cart_total_compare_price">
-                  Compare at: <s>{{ compare_total | money_with_currency }}</s>
-                </span>
-              {% endif %}
+  {% for item in cart.items %}
+    {% if item.variant.compare_at_price > item.variant.price %}
+      {% assign item_compare = item.variant.compare_at_price | times: item.quantity %}
+      {% assign compare_total = compare_total | plus: item_compare %}
+    {% endif %}
+  {% endfor %}
 
-              <p class="totals__total-value">
-                {{ total_price | money_with_currency }}
-              </p>
-            </div>
-          </div>
+  <div class="total_calculations">
+    {% if compare_total > total_price %}
+      {% assign savings = compare_total | minus: total_price %}
+      {% assign savings_percentage = savings | times: 100 | divided_by: compare_total %}
+      
+      <span class="cart_total_compare_price_minus_price_savings_percentage">
+        You saved {{ savings | money }} ({{ savings_percentage | round: 0 }}%)
+      </span>
+
+      <span class="cart_total_compare_price">
+        Compare at: <s>{{ compare_total | money_with_currency }}</s>
+      </span>
+    {% endif %}
+
+    <p class="totals__total-value">
+      {{ total_price | money_with_currency }}
+    </p>
+  </div>
+</div>
 
 
           <small class="tax-note caption-large rte">
