@@ -86,35 +86,46 @@
     $slider.animate({ scrollLeft: $slider.scrollLeft() - $slider.width() }, 300);
   });
 
-  $(document).on('click', '.add_cart', function () {
-  const productId = $(this).attr('p_id');
+});
 
+document.addEventListener('click', function(e) {
+  if (!e.target.classList.contains('add_cart')) return;
+
+  const productId = e.target.getAttribute('p_id');
   if (!productId) {
     alert('Product ID missing.');
     return;
   }
 
-  $.ajax({
-    type: 'POST',
-    url: '/cart/add.js',
-    data: { id: productId, quantity: 1 },
-    dataType: 'json',
-    success: function () {
-      console.log('Gift product added to cart.');
-      document.dispatchEvent(new CustomEvent('cart:refresh'));
-      // Refresh cart drawer content
-      $(".drawer__inner_box").load(location.href + " .drawer__inner_box", function () {
-        console.log("Cart updated successfully.");
+  // Add product to cart
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: productId, quantity: 1 })
+  })
+  .then(response => response.json())
+  .then(() => {
+    console.log('Gift product added to cart.');
+
+    // Fetch updated cart HTML (Dawn theme drawer)
+    fetch('/cart?view=drawer')
+      .then(res => res.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const drawerContent = doc.querySelector('.drawer__inner_box');
+
+        if (drawerContent) {
+          document.querySelector('.drawer__inner_box').innerHTML = drawerContent.innerHTML;
+
+          // Optionally open the drawer
+          document.body.classList.add('drawer-open');
+        }
       });
-    },
-    error: function (xhr) {
-      console.error('Failed to add gift product:', xhr.responseText);
-    }
-  });
+  })
+  .catch(err => console.error('Failed to add gift product:', err));
 });
 
-
-});
 
 </script>
     <style>
