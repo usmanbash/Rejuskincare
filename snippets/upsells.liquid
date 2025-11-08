@@ -101,16 +101,10 @@
     dataType: 'json',
     success: function () {
       console.log('Gift product added to cart.');
-
-      // Fetch updated cart JSON
-      $.getJSON('/cart.js', function(cart) {
-        // Update Dawn cart drawer using theme JS
-        if (window.cartDrawer) {
-          window.cartDrawer.updateContents(cart);
-          window.cartDrawer.open();
-        } else {
-          console.log('Cart drawer object not found.');
-        }
+      document.dispatchEvent(new CustomEvent('cart:refresh'));
+      // Refresh cart drawer content
+      $(".drawer__inner_box").load(location.href + " .drawer__inner_box", function () {
+        console.log("Cart updated successfully.");
       });
     },
     error: function (xhr) {
@@ -118,7 +112,6 @@
     }
   });
 });
-
 
 
 });
