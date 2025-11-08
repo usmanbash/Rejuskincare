@@ -54,15 +54,7 @@
               </div>
 
               <div class="optionss">
-                <select class="variant_select">
-                  {% for variant in gift.variants %}
-                    <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>
-                      {{ variant.title }} 
-                      {% unless variant.available %}(Sold Out){% endunless %}
-                    </option>
-                  {% endfor %}
-                </select>
-                <button class="add_cart">Add</button>
+                <button class="add_cart" p_id="{{ gift.selected_or_first_available_variant.id }}">+ Add</button>
               </div>
             </div>
           </div>
