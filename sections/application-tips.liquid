@@ -1,5 +1,5 @@
 <section
-  id="application-tips-{{ section.id }}"
+  id="application-tips-{{ section.id }}" style="background: {{ section.settings.background_color }}"
   class="application-tips-section {% unless section.settings.full_width %}page-width{% endunless %}"
 >
   <style>
@@ -144,6 +144,12 @@
       "id": "full_width",
       "label": "Full width section",
       "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
     },
     {
       "type": "text",
