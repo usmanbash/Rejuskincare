@@ -118,6 +118,7 @@
       "name": "Application Tips",
       "settings": {
         "full_width": false,
+        "background_color": "#f8f5f2",
         "badge_text": "Application Tips",
         "title": "How to Apply for Best Results",
         "image": "shopify://shop_images/gempages_587280051393790634-a5ee191d-81d6-4923-8599-e443e691b07e_jpg_c47610da-55b3-4702-b9f9-5abca7e5c0f9.png",
