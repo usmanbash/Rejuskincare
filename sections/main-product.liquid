@@ -1333,6 +1333,30 @@ document.querySelectorAll('.video-slider-block').forEach(block => {
 
   window.addEventListener('resize', updateSlider);
 });
+
+document.querySelectorAll('.video-slide').forEach(slide => {
+  const video = slide.querySelector('video');
+  const icon = slide.querySelector('.video_icon');
+
+  icon.addEventListener('click', () => {
+    // Pause all other videos
+    document.querySelectorAll('.video-slide video').forEach(v => {
+      if (v !== video) v.pause();
+    });
+
+    // Toggle current video
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  });
+
+  // Optional: pause video when it ends
+  video.addEventListener('ended', () => {
+    video.pause();
+  });
+});
 </script>
             {%- endcase -%}
           {%- endfor -%}
