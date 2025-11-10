@@ -1271,7 +1271,8 @@
           {% assign video_url = block.settings[video_url_key] %}
           {% if use_video and video_url != blank %}
             <div class="video-slide">
-              <video controls playsinline muted preload="metadata">
+              <img class="video_icon" src="https://cdn.shopify.com/s/files/1/0927/4166/5141/files/Frame_48099027.svg?v=1762791221" width="50px">
+              <video playsinline preload="metadata">
                 <source src="{{ video_url }}" type="video/mp4">
               </video>
             </div>
