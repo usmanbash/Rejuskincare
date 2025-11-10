@@ -439,20 +439,32 @@
                           </quantity-popover>
                         </td>
                         <td class="upsell_incart">
-                          <a href="">
-                            <div class="free_line_item_gift">
-                              <div class="free_line_item_gift_content">
-                                <img src="https://cdn.shopify.com/s/files/1/0927/4166/5141/files/Gift-2--Streamline-Core.svg?v=1762780065">
-                                <strong>Free Gift:</strong>
-                                <span></span>
-                              </div>
-                              <div class="price_free_gift">
-                                <s>$99.99</s>
-                                <span>$0</span>
-                              </div>
-                            </div>
-                          </a>
+                          {% if item.product.metafields.custom.line_item_gift != blank %}
+                            {% assign gift_products = item.product.metafields.custom.line_item_gift.value %}
+                            {% for gift in gift_products %}
+                              <a href="{{ gift.url }}">
+                                <div class="free_line_item_gift">
+                                  <div class="free_line_item_gift_content">
+                                    {% if gift.featured_image %}
+                                      <img src="{{ gift.featured_image | image_url: width: 120 }}" alt="{{ gift.title }}">
+                                    {% endif %}
+                                    <strong>Free Gift:</strong>
+                                    <span>{{ gift.title }}</span>
+                                  </div>
+                                  <div class="price_free_gift">
+                                    {% if gift.compare_at_price > gift.price %}
+                                      <s>{{ gift.compare_at_price | money }}</s>
+                                    {% else %}
+                                      <s>$99.99</s> <!-- fallback -->
+                                    {% endif %}
+                                    <span>$0</span>
+                                  </div>
+                                </div>
+                              </a>
+                            {% endfor %}
+                          {% endif %}
                         </td>
+
                       </tr>
                     {%- endfor -%}
                   </tbody>
