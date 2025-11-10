@@ -127,6 +127,9 @@
     "show_cart_note": false,
     "cart_drawer_collection": "",
     "cart_color_scheme": "scheme-1",
+    "collection_handle": "our-products",
+    "show_free_shipping_bar": true,
+    "free_shipping_threshold": 70,
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
