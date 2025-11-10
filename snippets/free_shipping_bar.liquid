@@ -10,7 +10,7 @@
 {% if percent > 100 %}
   {% assign percent = 100 %}
 {% endif %}
-{% if show_free_shipping_bar %}
+{% if settings.show_free_shipping_bar %}
 <div class="free_shipping_wrapper">
   {% if amount_left > 0 %}
     <span>🚚 Only {{ amount_left | round: 2 | prepend: '$' }} away from FREE shipping!</span>
