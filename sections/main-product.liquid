@@ -1335,20 +1335,14 @@ document.querySelectorAll('.video-slider-block').forEach(block => {
   window.addEventListener('resize', updateSlider);
 });
 
-<script>
 document.querySelectorAll('.video-slide').forEach(slide => {
   const video = slide.querySelector('video');
   const icon = slide.querySelector('.video_icon');
 
-  function togglePlay() {
-    // Pause all other videos and show their icons
-    document.querySelectorAll('.video-slide').forEach(s => {
-      const v = s.querySelector('video');
-      const i = s.querySelector('.video_icon');
-      if (v !== video) {
-        v.pause();
-        if (i) i.style.display = 'block';
-      }
+  icon.addEventListener('click', () => {
+    // Pause all other videos
+    document.querySelectorAll('.video-slide video').forEach(v => {
+      if (v !== video) v.pause();
     });
 
     // Toggle current video
@@ -1357,21 +1351,13 @@ document.querySelectorAll('.video-slide').forEach(slide => {
     } else {
       video.pause();
     }
-  }
+  });
 
-  // Click on icon toggles play/pause
-  icon.addEventListener('click', togglePlay);
-
-  // Click on video also toggles play/pause
-  video.addEventListener('click', togglePlay);
-
-  // Show/hide icon based on video state
-  video.addEventListener('play', () => icon.style.display = 'none');
-  video.addEventListener('pause', () => icon.style.display = 'block');
-  video.addEventListener('ended', () => icon.style.display = 'block');
+  // Optional: pause video when it ends
+  video.addEventListener('ended', () => {
+    video.pause();
+  });
 });
-</script>
-
 </script>
             {%- endcase -%}
           {%- endfor -%}
