@@ -1,4 +1,4 @@
-{% assign free_shipping_goal = 60 %}
+{% assign free_shipping_goal = settings.free_shipping_threshold %}
 {% assign cart_total = cart.total_price | divided_by: 100.0 %}
 {% assign amount_left = free_shipping_goal | minus: cart_total %}
 
@@ -10,7 +10,7 @@
 {% if percent > 100 %}
   {% assign percent = 100 %}
 {% endif %}
-
+{% if show_free_shipping_bar %}
 <div class="free_shipping_wrapper">
   {% if amount_left > 0 %}
     <span>🚚 Only {{ amount_left | round: 2 | prepend: '$' }} away from FREE shipping!</span>
@@ -29,3 +29,4 @@
     ></div>
   </div>
 </div>
+{% endif %}
