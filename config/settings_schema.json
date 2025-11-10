@@ -1464,6 +1464,12 @@
         "type": "number",
         "id": "free_shipping_threshold",
         "label": "Free shipping threshold"
+      },
+      {
+        "type": "number",
+        "id": "cart_timer",
+        "label": "Cart Timer in seconds",
+        "default": 600
       }
     ]
   }
