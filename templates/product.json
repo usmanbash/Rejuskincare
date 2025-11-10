@@ -455,16 +455,48 @@
     },
     "application_tips_bb8RHb": {
       "type": "application-tips",
+      "blocks": {
+        "tip_box_kHhbJG": {
+          "type": "tip_box",
+          "settings": {
+            "icon": "shopify://shop_images/Lipstick--Streamline-Core_2b8c1af7-a153-4334-9772-e4e97e6c003f.svg",
+            "title": "Dosage/Amount:",
+            "content": "<ul><li><strong>How much:</strong> Rice grain-sized amount per eye</li><li><strong>Pressure: </strong>Gentle - let the formula work, not force</li></ul>"
+          }
+        },
+        "tip_box_jxGiMY": {
+          "type": "tip_box",
+          "settings": {
+            "icon": "shopify://shop_images/Lipstick--Streamline-Core_1.svg",
+            "title": "Technique Specifics:",
+            "content": "<ul><li><strong>Direction:</strong> Always swipe outward to encourage drainage</li><li><strong>Pressure: </strong>Gentle - let the formula work, not force</li></ul>"
+          }
+        },
+        "tip_box_z8GD7n": {
+          "type": "tip_box",
+          "settings": {
+            "icon": "shopify://shop_images/Lipstick--Streamline-Core_2.svg",
+            "title": "What NOT to Do:",
+            "content": "<ul><li><strong>No rubbing</strong> needed (damages delicate skin)</li><li><strong>No waiting </strong>required (absorbs in 60 seconds)</li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "tip_box_kHhbJG",
+        "tip_box_jxGiMY",
+        "tip_box_z8GD7n"
+      ],
       "name": "Application Tips",
       "settings": {
         "full_width": false,
-        "background_color": "#ffffff",
+        "background_color": "#f8f5f2",
         "badge_text": "Application Tips",
         "title": "How to Apply for Best Results",
+        "image": "shopify://shop_images/gempages_587280051393790634-a5ee191d-81d6-4923-8599-e443e691b07e_jpg_c47610da-55b3-4702-b9f9-5abca7e5c0f9.png",
         "columns_desktop": "1fr 1fr",
         "columns_mobile": "1fr",
-        "padding_top_desktop": 60,
-        "padding_bottom_desktop": 60,
+        "padding_top_desktop": 90,
+        "padding_bottom_desktop": 90,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40,
         "heading_font_size_desktop": 32,
