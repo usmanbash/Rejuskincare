@@ -1276,43 +1276,7 @@
 </div>
 
 
-<script>
-document.querySelectorAll('.video-slider-block').forEach(block => {
-  const slider = block.querySelector('.video-slider');
-  const slides = slider.querySelectorAll('.video-slide');
-  const prev = block.querySelector('.prev');
-  const next = block.querySelector('.next');
-  let index = 0;
 
-  function getSlidesToShow() {
-    const desktop = parseInt(slider.dataset.desktop);
-    const tablet = parseInt(slider.dataset.tablet);
-    const mobile = parseInt(slider.dataset.mobile);
-    if (window.innerWidth < 768) return mobile;
-    if (window.innerWidth < 1024) return tablet;
-    return desktop;
-  }
-
-  function updateSlider() {
-    const slidesToShow = getSlidesToShow();
-    const offset = (index * (100 / slidesToShow));
-    slider.style.transform = `translateX(-${offset}%)`;
-  }
-
-  next.addEventListener('click', () => {
-    const slidesToShow = getSlidesToShow();
-    if (index < slides.length - slidesToShow) index++;
-    updateSlider();
-  });
-
-  prev.addEventListener('click', () => {
-    if (index > 0) index--;
-    updateSlider();
-  });
-
-  window.addEventListener('resize', updateSlider);
-});
-</script>
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
