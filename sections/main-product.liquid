@@ -1201,6 +1201,7 @@
                 </product-recommendations>
               {%- when 'icon-with-text' -%}
                 {% render 'icon-with-text', block: block %}
+                {%- when 'video_block' -%}
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -3352,6 +3353,124 @@
           "default": false,
           "info": "Hide the default quantity selector when using bundle options"
         }
+      ]
+    },
+    {
+      "type": "video_block",
+      "name": "Video Block",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Section Title", "default": "Our Videos" },
+
+        { "type": "header", "content": "Slides per View" },
+        {
+          "type": "range",
+          "id": "slides_desktop",
+          "label": "Videos per view (Desktop)",
+          "min": 1,
+          "max": 6,
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "slides_tablet",
+          "label": "Videos per view (Tablet)",
+          "min": 1,
+          "max": 4,
+          "default": 2
+        },
+        {
+          "type": "range",
+          "id": "slides_mobile",
+          "label": "Videos per view (Mobile)",
+          "min": 1,
+          "max": 3,
+          "default": 1
+        },
+        {
+          "type": "header",
+          "content": "Video URLs"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_video_1",
+          "label": "Use Video 1"
+        },
+        {
+          "type": "text",
+          "id": "video_url_1",
+          "label": "Video URL 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_video_2",
+          "label": "Use Video 2"
+        },
+        {
+          "type": "text",
+          "id": "video_url_2",
+          "label": "Video URL 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_video_3",
+          "label": "Use Video 3"
+        },
+        {
+          "type": "text",
+          "id": "video_url_3",
+          "label": "Video URL 3"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_video_4",
+          "label": "Use Video 4"
+        },
+        {
+          "type": "text",
+          "id": "video_url_4",
+          "label": "Video URL 4"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_video_5",
+          "label": "Use Video 5"
+        },
+        {
+          "type": "text",
+          "id": "video_url_5",
+          "label": "Video URL 5"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_video_6",
+          "label": "Use Video 6"
+        },
+        {
+          "type": "text",
+          "id": "video_url_6",
+          "label": "Video URL 6"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_video_7",
+          "label": "Use Video 7"
+        },
+        {
+          "type": "text",
+          "id": "video_url_7",
+          "label": "Video URL 7"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_video_8",
+          "label": "Use Video 8"
+        },
+        {
+          "type": "text",
+          "id": "video_url_8",
+          "label": "Video URL 8"
+        }
+
       ]
     }
   ],
