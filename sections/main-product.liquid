@@ -1202,6 +1202,115 @@
               {%- when 'icon-with-text' -%}
                 {% render 'icon-with-text', block: block %}
                 {%- when 'video_block' -%}
+                  <style>
+.video-slider-section {
+  padding: 40px 0;
+}
+.video-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.video-slider-container {
+  position: relative;
+  overflow: hidden;
+}
+.video-slider {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+.video-slide {
+  flex: 0 0 auto;
+  padding: 10px;
+}
+.video-slide video {
+  width: 100%;
+  border-radius: 10px;
+}
+.video-slider-arrow {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+</style>
+
+<div class="video-slider-section" id="video-slider-{{ section.id }}">
+  {% for block in section.blocks %}
+    <div class="video-slider-block" id="block-{{ block.id }}">
+      <div class="video-slider-header">
+        <h2>{{ block.settings.title }}</h2>
+        <div>
+          <button class="video-slider-arrow prev">‹</button>
+          <button class="video-slider-arrow next">›</button>
+        </div>
+      </div>
+
+      <div class="video-slider-container">
+        <div class="video-slider"
+             data-desktop="{{ block.settings.slides_desktop }}"
+             data-tablet="{{ block.settings.slides_tablet }}"
+             data-mobile="{{ block.settings.slides_mobile }}">
+          {% for i in (1..8) %}
+            {% assign use_video_key = 'use_video_' | append: i %}
+            {% assign video_url_key = 'video_url_' | append: i %}
+            {% assign use_video = block.settings[use_video_key] %}
+            {% assign video_url = block.settings[video_url_key] %}
+            {% if use_video and video_url != blank %}
+              <div class="video-slide">
+                <video controls playsinline muted preload="metadata">
+                  <source src="{{ video_url }}" type="video/mp4">
+                </video>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+<script>
+document.querySelectorAll('.video-slider-block').forEach(block => {
+  const slider = block.querySelector('.video-slider');
+  const slides = slider.querySelectorAll('.video-slide');
+  const prev = block.querySelector('.prev');
+  const next = block.querySelector('.next');
+  let index = 0;
+
+  function getSlidesToShow() {
+    const desktop = parseInt(slider.dataset.desktop);
+    const tablet = parseInt(slider.dataset.tablet);
+    const mobile = parseInt(slider.dataset.mobile);
+    if (window.innerWidth < 768) return mobile;
+    if (window.innerWidth < 1024) return tablet;
+    return desktop;
+  }
+
+  function updateSlider() {
+    const slidesToShow = getSlidesToShow();
+    const offset = (index * (100 / slidesToShow));
+    slider.style.transform = `translateX(-${offset}%)`;
+  }
+
+  next.addEventListener('click', () => {
+    const slidesToShow = getSlidesToShow();
+    if (index < slides.length - slidesToShow) index++;
+    updateSlider();
+  });
+
+  prev.addEventListener('click', () => {
+    if (index > 0) index--;
+    updateSlider();
+  });
+
+  window.addEventListener('resize', updateSlider);
+});
+</script>
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
