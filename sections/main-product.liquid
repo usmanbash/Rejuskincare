@@ -1239,38 +1239,40 @@
 </style>
 
 <div class="video-slider-section" id="video-slider-{{ section.id }}">
-  {% for block in section.blocks %}
-    <div class="video-slider-block" id="block-{{ block.id }}">
-      <div class="video-slider-header">
-        <h2>{{ block.settings.title }}</h2>
-        <div>
-          <button class="video-slider-arrow prev">‹</button>
-          <button class="video-slider-arrow next">›</button>
-        </div>
-      </div>
+  {% assign block = section.blocks.first %} {# assuming only one block is used #}
 
-      <div class="video-slider-container">
-        <div class="video-slider"
-             data-desktop="{{ block.settings.slides_desktop }}"
-             data-tablet="{{ block.settings.slides_tablet }}"
-             data-mobile="{{ block.settings.slides_mobile }}">
-          {% for i in (1..8) %}
-            {% assign use_video_key = 'use_video_' | append: i %}
-            {% assign video_url_key = 'video_url_' | append: i %}
-            {% assign use_video = block.settings[use_video_key] %}
-            {% assign video_url = block.settings[video_url_key] %}
-            {% if use_video and video_url != blank %}
-              <div class="video-slide">
-                <video controls playsinline muted preload="metadata">
-                  <source src="{{ video_url }}" type="video/mp4">
-                </video>
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
+  <div class="video-slider-block" id="block-{{ block.id }}">
+    <div class="video-slider-header">
+      <h2>{{ block.settings.title }}</h2>
+      <div>
+        <button class="video-slider-arrow prev">‹</button>
+        <button class="video-slider-arrow next">›</button>
       </div>
     </div>
-  {% endfor %}
+
+    <div class="video-slider-container">
+      <div class="video-slider"
+           data-desktop="{{ block.settings.slides_desktop }}"
+           data-tablet="{{ block.settings.slides_tablet }}"
+           data-mobile="{{ block.settings.slides_mobile }}">
+
+        {% for i in (1..8) %}
+          {% assign use_video_key = 'use_video_' | append: i %}
+          {% assign video_url_key = 'video_url_' | append: i %}
+          {% assign use_video = block.settings[use_video_key] %}
+          {% assign video_url = block.settings[video_url_key] %}
+          {% if use_video and video_url != blank %}
+            <div class="video-slide">
+              <video controls playsinline muted preload="metadata">
+                <source src="{{ video_url }}" type="video/mp4">
+              </video>
+            </div>
+          {% endif %}
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
 </div>
 
 
