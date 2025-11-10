@@ -1454,6 +1454,16 @@
         "type": "collection",
         "id": "collection_handle",
         "label": "Upsell Collection"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_free_shipping_bar",
+        "label": "Show Shipping bar"
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold"
       }
     ]
   }
