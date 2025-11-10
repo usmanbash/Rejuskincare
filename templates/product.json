@@ -453,6 +453,24 @@
         "padding_bottom": 52
       }
     },
+    "application_tips_bb8RHb": {
+      "type": "application-tips",
+      "name": "Application Tips",
+      "settings": {
+        "full_width": false,
+        "background_color": "#ffffff",
+        "badge_text": "Application Tips",
+        "title": "How to Apply for Best Results",
+        "columns_desktop": "1fr 1fr",
+        "columns_mobile": "1fr",
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "heading_font_size_desktop": 32,
+        "heading_font_size_mobile": 24
+      }
+    },
     "custom_icon_text_bg_fKk39F": {
       "type": "custom-icon-text-bg",
       "blocks": {
@@ -914,6 +932,7 @@
     "rich_text_zeaKag",
     "multicolumn_zJiQUq",
     "custom_icon_text_bg_Rt4R8G",
+    "application_tips_bb8RHb",
     "custom_icon_text_bg_fKk39F",
     "custom_comparison_table_UCpDCe",
     "multicolumn_tVAEXc",
