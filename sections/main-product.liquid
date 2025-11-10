@@ -1264,6 +1264,15 @@
 .video-slide {
     position: relative;
 }
+.video-slide .video_icon img {
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.video-slide.active .video_icon img{
+  display: none; /* hide icon when video is playing */
+}
+
 </style>
 
 <div class="video-slider-section" id="video-slider-{{ section.id }}">
@@ -1348,24 +1357,31 @@ document.querySelectorAll('.video-slide').forEach(slide => {
   const icon = slide.querySelector('.video_icon');
 
   icon.addEventListener('click', () => {
-    // Pause all other videos
+    // Pause all other videos and remove active class
     document.querySelectorAll('.video-slide video').forEach(v => {
-      if (v !== video) v.pause();
+      if (v !== video) {
+        v.pause();
+        v.parentElement.classList.remove('active');
+      }
     });
 
     // Toggle current video
     if (video.paused) {
       video.play();
+      slide.classList.add('active');
     } else {
       video.pause();
+      slide.classList.remove('active');
     }
   });
 
-  // Optional: pause video when it ends
+  // Remove active class when video ends
   video.addEventListener('ended', () => {
     video.pause();
+    slide.classList.remove('active');
   });
 });
+
 </script>
             {%- endcase -%}
           {%- endfor -%}
