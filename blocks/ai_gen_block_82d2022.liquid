@@ -1,0 +1,393 @@
+{% doc %}
+  @prompt
+    Want a image with text section where we have a single image which show the before and after effects of using a product To seperate the image a vertical white bar is needed to placed between the image which should be showed by ticking a checkbox. and the text part with the background color option along with 3 bullets and one text field . Bullet would be a icon uploaded
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-before-after-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .ai-before-after-image-wrapper-{{ ai_gen_id }} {
+    flex: 1;
+    min-width: 300px;
+    position: relative;
+  }
+
+  .ai-before-after-image-container-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: {{ block.settings.image_border_radius }}px;
+  }
+
+  .ai-before-after-image-placeholder-{{ ai_gen_id }} {
+    background-color: #f4f4f4;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-before-after-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .ai-before-after-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .ai-before-after-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-before-after-divider-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: {{ block.settings.divider_width }}px;
+    height: 100%;
+    background-color: {{ block.settings.divider_color }};
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .ai-before-after-text-wrapper-{{ ai_gen_id }} {
+    flex: 1;
+    min-width: 300px;
+    background-color: {{ block.settings.text_background_color }};
+    padding: 40px;
+    border-radius: {{ block.settings.text_border_radius }}px;
+  }
+
+  .ai-before-after-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 24px;
+  }
+
+  .ai-before-after-bullets-{{ ai_gen_id }} {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ai-before-after-bullet-item-{{ ai_gen_id }} {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .ai-before-after-bullet-icon-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-before-after-bullet-icon-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ai-before-after-bullet-icon-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-before-after-bullet-icon-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.5;
+  }
+
+  .ai-before-after-bullet-text-{{ ai_gen_id }} {
+    flex: 1;
+    font-size: {{ block.settings.bullet_text_size }}px;
+    color: {{ block.settings.text_color }};
+    line-height: 1.5;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-before-after-{{ ai_gen_id }} {
+      gap: 24px;
+    }
+
+    .ai-before-after-text-wrapper-{{ ai_gen_id }} {
+      padding: 24px;
+    }
+
+    .ai-before-after-heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-before-after-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-before-after-image-wrapper-{{ ai_gen_id }}">
+    <div class="ai-before-after-image-container-{{ ai_gen_id }}">
+      {% if block.settings.before_after_image %}
+        <img
+          src="{{ block.settings.before_after_image | image_url: width: 1200 }}"
+          alt="{{ block.settings.before_after_image.alt | escape }}"
+          loading="lazy"
+          width="{{ block.settings.before_after_image.width }}"
+          height="{{ block.settings.before_after_image.height }}"
+          class="ai-before-after-image-{{ ai_gen_id }}"
+        >
+      {% else %}
+        <div class="ai-before-after-image-placeholder-{{ ai_gen_id }}">
+          {{ 'image' | placeholder_svg_tag }}
+          <div class="ai-before-after-empty-state-{{ ai_gen_id }}">
+            Add a before/after image
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.show_divider %}
+        <div class="ai-before-after-divider-{{ ai_gen_id }}"></div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="ai-before-after-text-wrapper-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-before-after-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+    {% endif %}
+
+    <ul class="ai-before-after-bullets-{{ ai_gen_id }}">
+      {% for i in (1..3) %}
+        {% liquid
+          assign bullet_text_key = 'bullet_' | append: i | append: '_text'
+          assign bullet_icon_key = 'bullet_' | append: i | append: '_icon'
+          assign bullet_text = block.settings[bullet_text_key]
+          assign bullet_icon = block.settings[bullet_icon_key]
+        %}
+
+        {% if bullet_text != blank %}
+          <li class="ai-before-after-bullet-item-{{ ai_gen_id }}">
+            <div class="ai-before-after-bullet-icon-{{ ai_gen_id }}">
+              {% if bullet_icon %}
+                <img
+                  src="{{ bullet_icon | image_url: width: 100 }}"
+                  alt=""
+                  loading="lazy"
+                  width="100"
+                  height="100"
+                >
+              {% else %}
+                <div class="ai-before-after-bullet-icon-placeholder-{{ ai_gen_id }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% endif %}
+            </div>
+            <div class="ai-before-after-bullet-text-{{ ai_gen_id }}">{{ bullet_text }}</div>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Before and after",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_after_image",
+      "label": "Before/after image"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Divider"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Width",
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Text content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "See the difference"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "text_background_color",
+      "label": "Background color",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "text_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Bullet 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "bullet_1_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "bullet_1_text",
+      "label": "Text",
+      "default": "Visible reduction in fine lines"
+    },
+    {
+      "type": "header",
+      "content": "Bullet 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "bullet_2_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "bullet_2_text",
+      "label": "Text",
+      "default": "Improved skin texture and tone"
+    },
+    {
+      "type": "header",
+      "content": "Bullet 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "bullet_3_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "bullet_3_text",
+      "label": "Text",
+      "default": "Enhanced radiance and glow"
+    },
+    {
+      "type": "header",
+      "content": "Bullet style"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 20,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Icon size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "bullet_text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before and after"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,318 @@
+
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+<section
+  style="background: {{ section.settings.section_bg }};"
+  class="how-it-works icon-grid-section section-{{ section.id }}-padding"
+>
+  <div class="page-width">
+    <div class="text-headings">
+      {% if section.settings.subtitle != blank  %}
+    <span> {{ section.settings.subtitle }} </span>
+      {% endif %}
+    <h2>
+      {{ section.settings.section_title }}
+    </h2>
+
+    {{ section.settings.desc }}
+    </div>
+    <div class=" icon-grid {% if section.settings.mobile_columns == '1' %}one-in-row {% else %} two-in-row{% endif %} three-in-row">
+      {% for block in section.blocks %}
+        <div
+          class="custom-icon-block"
+          style="background-color: {{ section.settings.block_bg }};"
+        >
+          {% if block.settings.icon %}
+            <div
+              class="icon-wrapper"
+              style="background-color: {{ section.settings.icon_bg }};"
+            >
+              <img
+                src="{{ block.settings.icon | img_url: '100x100' }}"
+                alt="{{ block.settings.title }}"
+                style=" height: auto;"
+              >
+            </div>
+          {% endif %}
+          <div class="content-icon-block">
+          {% if block.settings.title != blank %}
+            <h4 style="margin: 0;">{{ block.settings.title }}</h4>
+          {% endif %}
+          {% if block.settings.desc != blank %}
+            <p style="margin: 0;">{{ block.settings.desc }}</p>
+          {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {%- if section.settings.button_label != blank -%}
+      <div class="text-center">
+                    <a
+                      {% if section.settings.button_link == blank %}
+                        role="link" aria-disabled="true"
+                      {% else %}
+                        href="{{ section.settings.button_link }}"
+                      {% endif %}
+                      class="button button--primary"
+                      {{ section.shopify_attributes }}
+                    >
+                      {{ section.settings.button_label | escape }} {% render 'icon-caret-right' %}
+                    </a>
+                  </div>
+                  {%- endif -%}
+  </div>
+</section>
+
+
+<style>
+
+.how-it-works h2{
+    font-size: {{ section.settings.title_font_size }}px; 
+    text-align: center; 
+    margin: 16px 0;
+}
+.how-it-works span {
+    background: #E3DACF;
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: #0B0B0B;
+    font-weight: 500;
+}
+.how-it-works .icon-grid{
+    display: grid;
+    gap: 24px;
+    border-radius: 18px;
+    text-align: center;
+    max-width: 1100px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+ /* Mobile defaults — controlled by schema */
+.how-it-works .icon-grid.one-in-row {
+  grid-template-columns: repeat(1, 1fr);
+}
+.how-it-works .icon-grid.two-in-row {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Desktop always fixed to 3 columns */
+@media screen and (min-width: 1024px) {
+  .how-it-works .icon-grid.three-in-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.how-it-works .custom-icon-block {
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    border-radius: 12px;
+}
+.how-it-works .icon-wrapper{
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.how-it-works .text-headings {
+    text-align: center;
+    max-width: 540px;
+    margin: auto;
+    margin-bottom: 16px;
+}
+.how-it-works .custom-icon-block img{
+  width:32px;
+}
+@media screen and (max-width: 1023px) {
+.how-it-works h2{
+  font-size:24px;
+  margin: 8px 0;
+}
+.how-it-works .custom-icon-block{
+padding:12px;
+flex-direction: row;
+gap:12px;
+}
+.how-it-works .custom-icon-block img{
+  width:24px;
+}
+.how-it-works .icon-wrapper{
+  width: 44px;
+  height: 44px;
+  margin:0;
+  padding: 10px;
+}
+.how-it-works .content-icon-block {
+    text-align: left;
+}
+}
+</style>
+{% schema %}
+{
+  "name": "How It Works",
+  "settings": [
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Columns on Mobile",
+      "options": [
+        { "value": "1", "label": "1 Column" },
+        { "value": "2", "label": "2 Columns" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "color_background",
+      "id": "section_bg",
+      "label": "Section Background Color"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Our Features"
+    },
+    {
+      "type": "richtext",
+      "id": "desc",
+      "label": "Description"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size (px)",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon Size (px)",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "icon_bg",
+      "label": "Icon Background Color",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "color",
+      "id": "block_bg",
+      "label": "Block Background Color",
+      "default": "#ffffff"
+    },
+        {
+          "type": "text",
+          "id": "button_label",
+          "default": "t:sections.image-with-text.blocks.button.settings.button_label.default",
+          "label": "t:sections.image-with-text.blocks.button.settings.button_label.label",
+          "info": "t:sections.image-with-text.blocks.button.settings.button_label.info"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.image-with-text.blocks.button.settings.button_link.label"
+        },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 32
+    }    
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image"
+        },
+        
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Block Title",
+          "default": "Feature Title"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Block Description",
+          "default": "This is the feature description text."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "How It Works",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+
