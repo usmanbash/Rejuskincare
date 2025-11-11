@@ -1,0 +1,311 @@
+{% if settings.collection_handle %}
+<div class="upsell_wrapper">
+  <div class="h-stack justify-between gap-4 top_upsell_heading">
+    <p>Complete your routine, get results faster</p>
+    <div class="cart-drawer__upsells_controls h-stack gap-2 sm:flex">
+      <button
+        is="prev-button"
+        class="circle-chevron hover:colors"
+        aria-controls="cart-drawer-upsells"
+        aria-label="Previous"
+      >
+        <svg role="presentation" focusable="false" width="5" height="8" class="icon icon-chevron-left-small reverse-icon" viewBox="0 0 5 8">
+          <path d="m4.25 7-3-3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+        </svg>
+      </button>
+      <button
+        is="next-button"
+        class="circle-chevron hover:colors"
+        aria-controls="cart-drawer-upsells"
+        aria-label="Next"
+      >
+        <svg role="presentation" focusable="false" width="5" height="8" class="icon icon-chevron-right-small reverse-icon" viewBox="0 0 5 8">
+          <path d="m.75 7 3-3-3-3" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="upsell_slider">
+    {% assign gift_collection = collections[settings.collection_handle] %}
+
+    {% if gift_collection and gift_collection.products.size > 0 %}
+      {% for gift in gift_collection.products %}
+        {% comment %} {% assign gift_in_cart = false %}
+        {% for item in cart.items %}
+          {% if item.product_id == gift.id %}
+            {% assign gift_in_cart = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %} {% endcomment %}
+
+        {% unless gift_in_cart %}
+          <div class="flex_box" {% if cart == empty %}style="display:none;"{% endif %}>
+            <img class="gift_featured_image" src="{{ gift.featured_image | img_url: '180x' }}" alt="{{ gift.title }}">
+            <div class="flex_box_cont">
+              <div class="upsell__info">
+                <h3 class="gift_title">{{ gift.title }}</h3>
+                <span class="gift_price">
+                  {{ gift.price | money }}
+                  {% if gift.compare_at_price > gift.price %}
+                    <s>{{ gift.compare_at_price | money }}</s>
+                    {% if gift.compare_at_price > gift.price %}
+                    {% assign you_save = gift.compare_at_price | minus: gift.price | times: 100 | divided_by: gift.compare_at_price %}
+                    <span class="you_save">YOU SAVE{{ you_save | round: 0 }}%</span>
+                    {% endif %}
+                  {% endif %}
+                </span>
+              </div>
+              <button class="add_cart" p_id="{{ gift.selected_or_first_available_variant.id }}">+ Add</button>
+            </div>
+          </div>
+        {% endunless %}
+      {% endfor %}
+    {% else %}
+      <p>No products found in gift collection.</p>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+<script>
+    $(document).ready(function () {
+        $(".drawer__inner_box").load(location.href + " .drawer__inner_box", function () {
+          console.log("Cart updated successfully.");
+        }); 
+        $(document).on("click", ".drawer___close-btn", function () {
+            $('cart-drawer#CartDrawer .fixed-overlay').click();
+        }); 
+  // Slider controls
+  $(document).on("click", "[is='next-button']", function () {
+    const $slider = $(this).closest(".upsell_wrapper").find(".upsell_slider");
+    $slider.animate({ scrollLeft: $slider.scrollLeft() + $slider.width() }, 300);
+  });
+
+  $(document).on("click", "[is='prev-button']", function () {
+    const $slider = $(this).closest(".upsell_wrapper").find(".upsell_slider");
+    $slider.animate({ scrollLeft: $slider.scrollLeft() - $slider.width() }, 300);
+  });
+
+  $(document).on('click', '.add_cart', function () {
+  const productId = $(this).attr('p_id');
+
+  if (!productId) {
+    alert('Product ID missing.');
+    return;
+  }
+
+  $.ajax({
+    type: 'POST',
+    url: '/cart/add.js',
+    data: { id: productId, quantity: 1 },
+    dataType: 'json',
+    success: function () {
+      console.log('Gift product added to cart.');
+      document.dispatchEvent(new CustomEvent('cart:refresh'));
+      // Refresh cart drawer content
+      $("div#CartDrawer_box").load(location.href + " .drawer__inner", function () {
+        console.log("Cart updated successfully.");
+      });
+      
+    },
+    error: function (xhr) {
+      console.error('Failed to add gift product:', xhr.responseText);
+    }
+  });
+});
+
+
+});
+
+</script>
+    <style>
+        /* =======================
+   Upsell Styles
+======================= */
+.upsell_wrapper {
+  position: relative;
+  padding-inline: 0px;
+}
+
+.upsell_slider {
+  display: flex;
+  overflow-x: hidden;
+  gap: 0;
+}
+
+/* =======================
+   Flex Box Layout
+======================= */
+.flex_box {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  min-width: 100%;
+  margin-inline: auto;
+  margin-bottom: 10px;
+  padding: 15px;
+  background-color: #F7F3EF;
+  border-radius: 10px;
+}
+
+.flex_box img {
+  width: 100%;
+}
+
+.flex_box h3 {
+  margin: 0 0 4px;
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* clamp to 1 line */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Alliance';
+    font-weight: 600;
+}
+
+/* Two-line clamp in free upsell */
+.free_upsell .flex_box h3 {
+  -webkit-line-clamp: 2;
+}
+
+span.gift_price {
+  display: block;
+      color: #141414;
+}
+
+/* =======================
+   Buttons
+======================= */
+button.add_cart {
+  display: block;
+    min-width: auto;
+    width: 78px;
+    padding: 10px 20px;
+    border: 1px solid #141414;
+    cursor: pointer;
+    background: transparent;
+    color: #141414;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: math-auto !important;
+    line-height: 1;
+    height: auto;
+    border-radius: 10px;
+}
+
+.free_upsell button.add_cart {
+  width: 115px;
+}
+
+/* =======================
+   Top Upsell Heading
+======================= */
+.top_upsell_heading {
+  display: flex;
+  align-items: center;
+  color: black;
+  font-weight: 500;
+  position: relative;
+}
+
+.top_upsell_heading button {
+  position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 30px;
+    color: #AFA8A0;
+    opacity: 1;
+    font-weight: 300;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 3px;
+}
+
+.top_upsell_heading button[is="prev-button"] {
+  left: auto;
+  right: 30px;
+  padding-left: 0px;
+  padding-right: 3px;
+}
+
+.top_upsell_heading button svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* =======================
+   Flex Box Container
+======================= */
+.flex_box_cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+p.horizontal-product__off.text-sm {
+  margin: 0;
+}
+
+cart-drawer-items {
+  display: flex;
+  flex-direction: column;
+}
+.optionss {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+.flex_box select {
+    outline: none !important;
+    min-width: 46%;
+}
+span.free-shipping-goal__label {
+    text-align: center;
+}
+.drawer{
+  z-index: 99999;
+}
+span.you_save {
+    font-size: 10px;
+    padding: 3px 7px;
+    background: black;
+    color: white;
+    border-radius: 100px;
+}
+
+span.gift_price {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 16px;
+    color: #1A1A1A;
+}
+
+span.gift_price s {
+    font-size: 14px;
+    color: #AFA8A0;
+}
+@media (max-width: 700px){
+    .flex_box_cont {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
+button.add_cart {
+    width: 100%;
+}
+}
+</style>
+  

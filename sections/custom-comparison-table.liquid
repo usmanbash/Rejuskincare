@@ -1,7 +1,7 @@
 {%- style -%}
   .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
   @media screen and (min-width: 750px) {
@@ -14,7 +14,7 @@
 {%- endstyle -%}
 
 <section class="comparison-table-section section-{{ section.id }}-padding" style="background-color: {{ section.settings.section_bg }};">
-  <div class="page-width">
+  <div class="page-width section-{{ section.id }}-padding">
     <h2
                 class="rich-text__heading rte text-center inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                 {{ section.shopify_attributes }}
@@ -34,11 +34,23 @@
             {% assign title_id = "col" | append: i | append: "_title" %}
             {% assign img = section.settings[image_id] %}
             {% assign title = section.settings[title_id] %}
+            {% assign header_image_width = 160 %}
 
             <th class="col-{{ i }}{% if i == 2 %} middle-col{% endif %}"
               style="{% if i == 2 %}background-color: {{ section.settings.middle_col_bg }};{% endif %}">
               {% if img != blank %}
-                <img src="{{ img | img_url: 'master' }}" alt="Column {{ i }}" class="header-image">
+                {% assign header_image_height = header_image_width %}
+                {% if img.aspect_ratio %}
+                  {% assign header_image_height = header_image_width | divided_by: img.aspect_ratio | round: 0 %}
+                {% endif %}
+                <img
+                  src="{{ img | image_url: width: header_image_width }}"
+                  width="{{ header_image_width }}"
+                  height="{{ header_image_height }}"
+                  alt="Column {{ i }}"
+                  class="header-image"
+                  loading="lazy"
+                >
               {% endif %}
               {% if title != blank %}
                 <p class="header-text">{{ title }}</p>
@@ -55,10 +67,25 @@
               {% assign text_value = section.settings[text_id] %}
               <td class="col-{{ i }}{% if i == 2 %} middle-col{% endif %}"
                 style="{% if i == 2 %}background-color: {{ section.settings.middle_col_bg }};{% endif %}">
-                {% if i == 2 and section.settings.middle_icon != blank %}
-                  <img src="{{ section.settings.middle_icon | img_url: '24x24' }}" alt="icon" class="cell-icon">
-                {% endif %}
-               <span> {{ text_value }} </span>
+                <div class="cell-content">
+                  {% if i == 2 and section.settings.middle_icon != blank %}
+                    {% assign middle_icon_display_width = 24 %}
+                    {% assign middle_icon_display_height = middle_icon_display_width %}
+                    {% if section.settings.middle_icon.aspect_ratio %}
+                      {% assign middle_icon_display_height = middle_icon_display_width | divided_by: section.settings.middle_icon.aspect_ratio | round: 0 %}
+                    {% endif %}
+                    {% assign middle_icon_src_width = middle_icon_display_width | times: 2 %}
+                    <img
+                      src="{{ section.settings.middle_icon | image_url: width: middle_icon_src_width }}"
+                      width="{{ middle_icon_display_width }}"
+                      height="{{ middle_icon_display_height }}"
+                      alt="icon"
+                      class="cell-icon"
+                      loading="lazy"
+                    >
+                  {% endif %}
+                  <span class="cell-text">{{ text_value }}</span>
+                </div>
               </td>
             {% endfor %}
           </tr>
@@ -83,31 +110,67 @@
                     </a>
                   {%- endif -%}
                   {%  when 'icon-text' %}
-                  <div class ="three-icon-text" style="">
-                      <div class="text-icon-block {% if block.settings.mobile_hide_1 %} small-hide {% endif %}">
+                  <div class ="three-icon-text">
+                      <div class="text-icon-block border-right">
                         {% if block.settings.image_1 != blank %}
                         <div class="icon-block">
-                          <img src="{{ block.settings.image_1 | img_url: 'master' }}" class="icon">
+                          {% assign icon_one_display_width = 40 %}
+                          {% assign icon_one_display_height = icon_one_display_width %}
+                          {% if block.settings.image_1.aspect_ratio %}
+                            {% assign icon_one_display_height = icon_one_display_width | divided_by: block.settings.image_1.aspect_ratio | round: 0 %}
+                          {% endif %}
+                          <img
+                            src="{{ block.settings.image_1 | image_url: width: 80 }}"
+                            width="{{ icon_one_display_width }}"
+                            height="{{ icon_one_display_height }}"
+                            class="icon"
+                            loading="lazy"
+                            alt="{{ block.settings.text_1 | strip_html | escape }}"
+                          >
                         </div>
                     {% endif %}
                         <div class="text-content">
                           {{ block.settings.text_1 }}
                         </div>
                       </div>
-                      <div class="text-icon-block {% if block.settings.mobile_hide_2 %} small-hide {% endif %}">
+                      <div class="text-icon-block border-right">
                         {% if block.settings.image_2 != blank %}
                         <div class="icon-block">
-                          <img src="{{ block.settings.image_2 | img_url: 'master' }}" class="icon">
+                          {% assign icon_two_display_width = 40 %}
+                          {% assign icon_two_display_height = icon_two_display_width %}
+                          {% if block.settings.image_2.aspect_ratio %}
+                            {% assign icon_two_display_height = icon_two_display_width | divided_by: block.settings.image_2.aspect_ratio | round: 0 %}
+                          {% endif %}
+                          <img
+                            src="{{ block.settings.image_2 | image_url: width: 80 }}"
+                            width="{{ icon_two_display_width }}"
+                            height="{{ icon_two_display_height }}"
+                            class="icon"
+                            loading="lazy"
+                            alt="{{ block.settings.text_2 | strip_html | escape }}"
+                          >
                         </div>
                         {% endif %}
                         <div class="text-content ">
                           {{ block.settings.text_2 }}
                         </div>
                       </div>
-                      <div class="text-icon-block {% if block.settings.mobile_hide_3 %} small-hide {% endif %}">
+                      <div class="text-icon-block">
                         {% if block.settings.image_3 != blank %}
                         <div class="icon-block">
-                          <img src="{{ block.settings.image_3 | img_url: 'master' }}" class="icon">
+                          {% assign icon_three_display_width = 40 %}
+                          {% assign icon_three_display_height = icon_three_display_width %}
+                          {% if block.settings.image_3.aspect_ratio %}
+                            {% assign icon_three_display_height = icon_three_display_width | divided_by: block.settings.image_3.aspect_ratio | round: 0 %}
+                          {% endif %}
+                          <img
+                            src="{{ block.settings.image_3 | image_url: width: 80 }}"
+                            width="{{ icon_three_display_width }}"
+                            height="{{ icon_three_display_height }}"
+                            class="icon"
+                            loading="lazy"
+                            alt="{{ block.settings.text_3 | strip_html | escape }}"
+                          >
                         </div>
                         {% endif %}
                         <div class="text-content">
@@ -133,14 +196,9 @@
   max-width: 900px;
   margin: 40px auto;
 }
-.comparison-table .col-1{
-  text-align: left;
-  border-right: none;
-}
-.comparison-table .col-1,
-.comparison-table .col-3{
-  color:#1D211EBF;
-  border-left: none;
+
+.comparison-table {
+  overflow: hidden;
 }
 
 .comparison-table th,
@@ -148,41 +206,67 @@
   border-top: 1px solid #DBD3C8;
   padding: 16px;
   vertical-align: middle;
+  text-align: left;
+}
+.comparison-table tr:first-child th {
+  border-top: 0;
 }
 .comparison-table .header-row th {
   font-weight: 600;
   font-size: 16px;
-  border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border:{{ section.settings.middle_col_bg }};
+  text-align: center;
 }
 .comparison-table .header-image {
   max-width: 80px;
-  margin-bottom: 8px;
+    margin-bottom: 8px;
+    object-fit: cover;
+    max-height: 130px;
 }
 .comparison-table .header-text {
   margin: 0;
   font-weight: 500;
 }
+.comparison-table .cell-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+  font-weight: 300;
+}
+.icon-block img{
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+.comparison-table .cell-text {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1.45;
+}
 .comparison-table .middle-col {
   font-weight: 500;
-  color:#2D2C17;
+  box-shadow: 0 12px 32px rgba(84, 66, 48, 0.08);
+  border: 1px solid rgba(84, 66, 48, 0.08);
 }
-.comparison-table td.middle-col {
-  
-  display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: left;
-    border-right: {{ section.settings.middle_col_bg }};
-    border-left: {{ section.settings.middle_col_bg }};
-    border-bottom: {{ section.settings.middle_col_bg }};
+.comparison-table .middle-col .cell-content {
+  justify-content: center;
 }
 .comparison-table .cell-icon {
   width: 20px;
   height: 20px;
   margin-right: 6px;
   vertical-align: middle;
+}
+.comparison-table .col-1 {
+  font-weight: 600;
+  color: #3A2B20;
+  max-width: 160px;
+}
+.comparison-table .col-3 {
+  color: #6B655E;
+}
+.comparison-table tbody tr:nth-child(odd) .col-1 {
+  background-color: rgba(247, 244, 237, 0.35);
 }
 .button-icon-block.text-center {
     display: flex;
@@ -192,30 +276,27 @@
     margin: auto;
 }
 @media screen and (max-width: 749px) {
-  .comparison-table table,
-  .comparison-table tr,
-  .comparison-table td,
-  .comparison-table th {
-    width: 100%;
+  .comparison-table {
+    overflow-x: auto;
+    padding-bottom: 8px;
   }
-  .comparison-table tr {
-    margin-bottom: 16px;
+  .comparison-table table {
+    min-width: 520px;
+    margin: 24px auto 32px;
   }
-  .comparison-table .header-image{
-  display:none;
+  .comparison-table th,
+  .comparison-table td {
+    padding: 14px 12px;
+    font-size: 14px;
   }
-  .comparison-table td{
-    padding:8px !important;
+  .comparison-table .cell-text {
+    font-size: 14px;
   }
-  .comparison-table .cell-icon {
-    
-    margin-right: 0; 
-    display: block;
-    margin: auto;
+  .comparison-table .header-image {
+    max-width: 60px;
   }
-  .comparison-table td.middle-col{
-    text-align: center;
-    flex-direction: column;
+  .comparison-table .col-1 {
+    max-width: 140px;
   }
 }
 </style>
@@ -294,7 +375,7 @@
       "label": "Column 2 Image"
     },
     {
-      "type": "inline_richtext",
+      "type": "text",
       "id": "col2_title",
       "label": "Column 2 Title"
     },
@@ -304,7 +385,7 @@
       "label": "Column 3 Image"
     },
     {
-      "type": "inline_richtext",
+      "type": "text",
       "id": "col3_title",
       "label": "Column 3 Title"
     },
@@ -411,7 +492,7 @@
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_top",
-      "default": 64
+      "default": 40
     },
     {
       "type": "range",
@@ -421,7 +502,7 @@
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
-      "default": 64
+      "default": 52
     }
 
   ],
@@ -442,12 +523,6 @@
           "label": "Text_1"
         },
         {
-          "type": "checkbox",
-          "id": "mobile_hide_1",
-          "default": false,
-          "label": "Hide Image 1 n Text 1 on mobile"
-        },
-        {
           "type": "image_picker",
           "id": "image_2",
           "label": "Image 2"
@@ -458,12 +533,6 @@
           "label": "Text_2"
         },
         {
-          "type": "checkbox",
-          "id": "mobile_hide_2",
-          "default": false,
-          "label": "Hide Image 2 n Text 2 on mobile"
-        },
-        {
           "type": "image_picker",
           "id": "image_3",
           "label": "Image 3"
@@ -472,13 +541,7 @@
           "type": "text",
           "id": "text_3",
           "label": "Text_3"
-        },
-        {
-          "type": "checkbox",
-          "id": "mobile_hide_3",
-          "default": true,
-          "label": "Hide Image 3 n Text 3 on mobile"
-        },
+        }
       ]
     },{
       "type": "button",

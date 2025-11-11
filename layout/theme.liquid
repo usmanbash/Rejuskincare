@@ -28,6 +28,7 @@
 
     {% render 'meta-tags' %}
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
@@ -99,13 +100,50 @@
         background-color: rgb(var(--color-background));
       }
 
+      
+        @font-face {
+          font-family: 'Gambarino';
+          src: url('{{ "Gambarino-Regular.otf" | asset_url }}') format('opentype');
+          font-weight: normal;
+          font-style: normal;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'Alliance';
+          src: url('{{ "Alliance-No-1.otf" | asset_url }}') format('opentype');
+          font-weight: 300;
+          font-style: normal;
+          font-display: swap;
+          ascent-override: 90%;
+          descent-override: 10%;
+        }
+        @font-face {
+          font-family: 'Alliance';
+          src: url('{{ "Alliance No.1 Medium.otf" | asset_url }}') format('opentype');
+          font-weight: bold;
+          ascent-override: 90%;
+          descent-override: 10%;
+        }
+        @font-face {
+          font-family: 'Alliance';
+          src: url('{{ "Alliance No.1 Regular.otf" | asset_url }}') format('opentype');
+          font-weight: 500;
+          ascent-override: 90%;
+          descent-override: 10%;
+        }
+        
+        
+      
       :root {
-        --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+        --font-gambarino-family: 'Gambarino';
+        --font-alliance-family: 'Alliance';
+        --font-body-family: var(--font-alliance-family);
         --font-body-style: {{ settings.type_body_font.style }};
         --font-body-weight: {{ settings.type_body_font.weight }};
         --font-body-weight-bold: {{ settings.type_body_font.weight | plus: 300 | at_most: 1000 }};
 
-        --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+
+        --font-heading-family: var(--font-gambarino-family);
         --font-heading-style: {{ settings.type_header_font.style }};
         --font-heading-weight: {{ settings.type_header_font.weight }};
 
