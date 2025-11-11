@@ -366,3 +366,9 @@ ul.bullets li{
   color: #1D211E;
   font-weight: 500;
 }
+@media screen and (max-width: 1300px) {
+.three-icon-text { 
+    justify-content: center;
+    flex-wrap: wrap;
+}
+}
