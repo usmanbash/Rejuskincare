@@ -86,6 +86,27 @@
             "hide_quantity_selector": true
           }
         },
+        "free_gifts_7jfkbT": {
+          "type": "free_gifts",
+          "settings": {
+            "heading": "FREE GIFTS WITH YOUR ORDER",
+            "description": "",
+            "gift_1_image": "shopify://shop_images/20251103_1342_Minimalist_E-Book_Icon_simple_compose_01k94rcnvtev19x90t0bggdyeh_1.png",
+            "gift_1_badge": "$19.99 FREE",
+            "gift_1_title": "Free E-book",
+            "gift_1_subtitle": "",
+            "gift_2_image": "shopify://shop_images/20251103_1342_Minimalist_E-Book_Icon_simple_compose_01k94rcnvtev19x90t0bggdyeh_1_1.png",
+            "gift_2_badge": "$49.99 FREE",
+            "gift_2_title": "Free Eye Massage Roller",
+            "gift_2_subtitle": "",
+            "gift_3_badge": "",
+            "gift_3_title": "",
+            "gift_3_subtitle": "",
+            "gift_4_badge": "",
+            "gift_4_title": "",
+            "gift_4_subtitle": ""
+          }
+        },
         "custom_liquid_ihpBQq": {
           "type": "custom_liquid",
           "settings": {
@@ -109,27 +130,6 @@
           "type": "custom_liquid",
           "settings": {
             "custom_liquid": "{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}"
-          }
-        },
-        "free_gifts_7jfkbT": {
-          "type": "free_gifts",
-          "settings": {
-            "heading": "FREE GIFTS WITH YOUR ORDER",
-            "description": "",
-            "gift_1_image": "shopify://shop_images/20251103_1342_Minimalist_E-Book_Icon_simple_compose_01k94rcnvtev19x90t0bggdyeh_1.png",
-            "gift_1_badge": "$19.99 FREE",
-            "gift_1_title": "Free E-book",
-            "gift_1_subtitle": "",
-            "gift_2_image": "shopify://shop_images/20251103_1342_Minimalist_E-Book_Icon_simple_compose_01k94rcnvtev19x90t0bggdyeh_1_1.png",
-            "gift_2_badge": "$49.99 FREE",
-            "gift_2_title": "Free Eye Massage Roller",
-            "gift_2_subtitle": "",
-            "gift_3_badge": "",
-            "gift_3_title": "",
-            "gift_3_subtitle": "",
-            "gift_4_badge": "",
-            "gift_4_title": "",
-            "gift_4_subtitle": ""
           }
         },
         "share": {
@@ -220,11 +220,11 @@
         "variant_picker",
         "quantity_selector",
         "bundle_selector_b8Ukx3",
+        "free_gifts_7jfkbT",
         "custom_liquid_ihpBQq",
         "buy_buttons",
         "custom_liquid_KXgMbw",
         "custom_liquid_JhhiVF",
-        "free_gifts_7jfkbT",
         "share",
         "video_block_9ExLjQ",
         "collapsible_tab_myVPd6",
@@ -313,7 +313,9 @@
         "color_scheme": "scheme-4af365e0-1caa-4340-b2ff-01755bad2e35",
         "full_width": true,
         "padding_top": 40,
-        "padding_bottom": 40
+        "padding_bottom": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 52
       }
     },
     "multicolumn_zJiQUq": {
@@ -372,6 +374,8 @@
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "special_class": "",
+        "custom_design": true,
+        "subtitle": "",
         "no-padding": true,
         "title": "",
         "heading_size": "h1",
@@ -390,7 +394,9 @@
         "card_bg_color": "#ffffff",
         "gurantee_text": "",
         "padding_top": 36,
-        "padding_bottom": 36
+        "padding_bottom": 36,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 52
       }
     },
     "custom_icon_text_bg_Rt4R8G": {
@@ -586,10 +592,13 @@
           "settings": {
             "image_1": "shopify://shop_images/Lock-2--Streamline-Ultimate.png",
             "text_1": "Secure checkout",
+            "mobile_hide_1": false,
             "image_2": "shopify://shop_images/Shipping-Truck-Fast--Streamline-Ultimate.png",
             "text_2": "Fast shipping",
+            "mobile_hide_2": false,
             "image_3": "shopify://shop_images/Certified-Ribbon-1--Streamline-Ultimate.png",
-            "text_3": "100% MONEY BACK GUARANTEE"
+            "text_3": "100% MONEY BACK GUARANTEE",
+            "mobile_hide_3": true
           }
         }
       },
@@ -683,6 +692,8 @@
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "special_class": "special_class",
+        "custom_design": true,
+        "subtitle": "",
         "no-padding": false,
         "title": "5 Seconds to Apply, 60 Seconds to Transform",
         "heading_size": "h1",
@@ -701,7 +712,9 @@
         "card_bg_color": "#ffffff",
         "gurantee_text": "<p><strong>PRO TIP</strong>: Acts as primer! Apply 60 seconds before makeup - no creasing for 12+ hours</p>",
         "padding_top": 56,
-        "padding_bottom": 56
+        "padding_bottom": 56,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 52
       }
     },
     "customer_review_carousel_QVAcGr": {
@@ -752,7 +765,9 @@
         "section_bg": "#f8f5f2",
         "card_bg": "#ffffff",
         "padding_top": 40,
-        "padding_bottom": 52
+        "padding_bottom": 52,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
       }
     },
     "image_with_text_4dBE3X": {
