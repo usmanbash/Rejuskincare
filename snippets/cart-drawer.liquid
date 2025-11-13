@@ -20,6 +20,7 @@
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
     <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
+    <div id="CartDrawer_box">
     <div
       class="drawer__inner gradient color-{{ settings.cart_color_scheme }}"
       role="dialog"
@@ -62,7 +63,7 @@
         </div>
       {%- endif -%}
       <div class="drawer__header">
-        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
+        <h2 class="drawer__heading">My Cart <span class="cart_count"> {{ cart.item_count }} </span> </h2>
         <button
           class="drawer__close"
           type="button"
@@ -74,11 +75,15 @@
           </span>
         </button>
       </div>
-      <cart-drawer-items
-        {% if cart == empty %}
-          class=" is-empty"
-        {% endif %}
-      >
+      {% comment %} timer block  {% endcomment %}
+      <div class="time_block">
+        <img src="https://cdn.shopify.com/s/files/1/0927/4166/5141/files/clock.png?v=1762536730" width="15px" />
+        Your cart is reserved for:
+        <span class="timer_block" data-time-seconds="{{ settings.cart_timer }}"></span>
+      </div>
+      {% comment %} Free shipping bar  {% endcomment %}
+       {% render "free_shipping_bar" %}
+      <cart-drawer-items {% if cart == empty %} class=" is-empty" {% endif %} >
         <form
           action="{{ routes.cart_url }}"
           id="CartDrawer-Form"
@@ -89,33 +94,6 @@
             {%- if cart != empty -%}
               <div class="drawer__cart-items-wrapper">
                 <table class="cart-items" role="table">
-                  <thead role="rowgroup">
-                    <tr role="row">
-                      <th id="CartDrawer-ColumnProductImage" role="columnheader">
-                        <span class="visually-hidden">{{ 'sections.cart.headings.image' | t }}</span>
-                      </th>
-                      <th
-                        id="CartDrawer-ColumnProduct"
-                        class="caption-with-letter-spacing"
-                        scope="col"
-                        role="columnheader"
-                      >
-                        {{ 'sections.cart.headings.product' | t }}
-                      </th>
-                      <th
-                        id="CartDrawer-ColumnTotal"
-                        class="right caption-with-letter-spacing"
-                        scope="col"
-                        role="columnheader"
-                      >
-                        {{ 'sections.cart.headings.total' | t }}
-                      </th>
-                      <th id="CartDrawer-ColumnQuantity" role="columnheader">
-                        <span class="visually-hidden">{{ 'sections.cart.headings.quantity' | t }}</span>
-                      </th>
-                    </tr>
-                  </thead>
-
                   <tbody role="rowgroup">
                     {%- for item in cart.items -%}
                       <tr
@@ -154,26 +132,26 @@
                             {{- item.product.title | escape -}}
                           </a>
 
-                          {%- if item.original_price != item.final_price -%}
+                          {% comment %} {%- if item.variant.price != item.variant.compare_at_price -%}
                             <div class="cart-item__discounted-prices">
                               <span class="visually-hidden">
                                 {{ 'products.product.price.regular_price' | t }}
                               </span>
                               <s class="cart-item__old-price product-option">
-                                {{- item.original_price | money -}}
+                                {{- item.variant.compare_at_price | money -}}
                               </s>
                               <span class="visually-hidden">
                                 {{ 'products.product.price.sale_price' | t }}
                               </span>
                               <strong class="cart-item__final-price product-option">
-                                {{ item.final_price | money }}
+                                {{ item.variant.price | money }}
                               </strong>
                             </div>
                           {%- else -%}
                             <div class="product-option">
                               {{ item.original_price | money }}
                             </div>
-                          {%- endif -%}
+                          {%- endif -%} {% endcomment %}
 
                           {%- if item.product.has_only_default_variant == false
                             or item.properties.size != 0
@@ -236,19 +214,19 @@
                         <td class="cart-item__totals right" role="cell" headers="CartDrawer-ColumnTotal">
                           {%- render 'loading-spinner' -%}
                           <div class="cart-item__price-wrapper">
-                            {%- if item.original_line_price != item.final_line_price -%}
+                            {%- if item.variant.price != item.variant.compare_at_price -%}
                               <div class="cart-item__discounted-prices">
                                 <span class="visually-hidden">
                                   {{ 'products.product.price.regular_price' | t }}
                                 </span>
                                 <s class="cart-item__old-price price price--end">
-                                  {{ item.original_line_price | money }}
+                                  {{ item.variant.compare_at_price | money }}
                                 </s>
                                 <span class="visually-hidden">
                                   {{ 'products.product.price.sale_price' | t }}
                                 </span>
                                 <span class="price price--end">
-                                  {{ item.final_line_price | money }}
+                                  {{ item.variant.price | money }}
                                 </span>
                               </div>
                             {%- else -%}
@@ -460,6 +438,33 @@
                             </div>
                           </quantity-popover>
                         </td>
+                        <td class="upsell_incart">
+                          {% if item.product.metafields.custom.line_item_gift != blank %}
+                            {% assign gift_products = item.product.metafields.custom.line_item_gift.value %}
+                            {% for gift in gift_products %}
+                              <a href="{{ gift.url }}">
+                                <div class="free_line_item_gift">
+                                  <div class="free_line_item_gift_content">
+                                    {% if gift.featured_image %}
+                                      <img src="https://cdn.shopify.com/s/files/1/0927/4166/5141/files/Gift-2--Streamline-Core.svg?v=1762780065" alt="{{ gift.title }}">
+                                    {% endif %}
+                                    <strong>Free Gift:</strong>
+                                    <span>{{ gift.title }}</span>
+                                  </div>
+                                  <div class="price_free_gift">
+                                    {% if gift.compare_at_price > gift.price %}
+                                      <s>{{ gift.compare_at_price | money }}</s>
+                                    {% else %}
+                                      <s>$99.99</s> <!-- fallback -->
+                                    {% endif %}
+                                    <span>$0</span>
+                                  </div>
+                                </div>
+                              </a>
+                            {% endfor %}
+                          {% endif %}
+                        </td>
+
                       </tr>
                     {%- endfor -%}
                   </tbody>
@@ -473,6 +478,7 @@
           </div>
           <div id="CartDrawer-CartErrors" role="alert"></div>
         </form>
+        {% render "upsells" %}
       </cart-drawer-items>
       <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
@@ -513,12 +519,46 @@
             {%- endif -%}
           </div>
 
-          <div class="totals" role="status">
-            <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
-            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+          <div class="shipping_box">
+            <div class="shipp_text">Shipping to NL <img src="https://cdn.shopify.com/s/files/1/0927/4166/5141/files/NL_-_Netherlands.svg?v=1762626779"> </div>
+            <span>FREE</span>
           </div>
 
-          <small class="tax-note caption-large rte">
+          <div class="totals" role="status">
+            <h2 class="totals__total">Total Price (incl. taxes)</h2>
+
+            {% assign compare_total = 0 %}
+            {% assign total_price = cart.total_price %}
+
+            {% for item in cart.items %}
+              {% if item.variant.compare_at_price > item.variant.price %}
+                {% assign item_compare = item.variant.compare_at_price | times: item.quantity %}
+                {% assign compare_total = compare_total | plus: item_compare %}
+              {% endif %}
+            {% endfor %}
+
+            <div class="total_calculations">
+              {% if compare_total > total_price %}
+                {% assign savings = compare_total | minus: total_price %}
+                {% assign savings_percentage = savings | times: 100 | divided_by: compare_total %}
+                
+                <span class="cart_total_compare_price_minus_price_savings_percentage">
+                  YOU SAVE ({{ savings_percentage | round: 0 }}%)
+                </span>
+
+                <span class="cart_total_compare_price">
+                  <s>{{ compare_total | money }}</s>
+                </span>
+              {% endif %}
+
+              <p class="totals__total-value">
+                {{ total_price | money }}
+              </p>
+            </div>
+          </div>
+
+
+          <small class="tax-note caption-large rte" style="display: none;">
             {%- if cart.duties_included and cart.taxes_included -%}
               {%- if shop.shipping_policy.body == blank -%}
                 {{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
@@ -572,10 +612,480 @@
               disabled
             {% endif %}
           >
-            {{ 'sections.cart.checkout' | t }}
+           <img src="https://cdn.shopify.com/s/files/1/0927/4166/5141/files/Lock-2--Streamline-Ultimate_f906a079-3713-4b14-9c5a-8ada505e4265.svg?v=1762622089"> 
+           {{ 'sections.cart.checkout' | t }} <span>{{ cart.total_price | money}}</span>
           </button>
         </div>
+        <div class="footer__payment cart_payment">
+            <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
+            <ul class="list list-payment" role="list">
+              {%- for type in shop.enabled_payment_types -%}
+                <li class="list-payment__item">
+                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+
+        <div class="three-icon-text cart_icons">
+                      <div class="text-icon-block border-right">
+                        <div class="icon-block">
+                          <img src="//www.rejuwellness.co/cdn/shop/files/Lock-2--Streamline-Ultimate.png?v=1761907745" class="icon">
+                        </div>
+                        <div class="text-content">
+                          Secure checkout
+                        </div>
+                      </div>
+                      <div class="text-icon-block border-right">
+                        <div class="icon-block">
+                          <img src="//www.rejuwellness.co/cdn/shop/files/Shipping-Truck-Fast--Streamline-Ultimate.png?v=1761907745" class="icon">
+                        </div>
+                        <div class="text-content ">
+                          Fast shipping
+                        </div>
+                      </div>
+                      <div class="text-icon-block">
+                        <div class="icon-block">
+                          <img src="//www.rejuwellness.co/cdn/shop/files/Certified-Ribbon-1--Streamline-Ultimate.png?v=1761907746" class="icon">
+                        </div>
+                        <div class="text-content">
+                          100% MONEY BACK GUARANTEE
+                        </div>
+                      </div>
+                  </div>
       </div>
+    </div>
     </div>
   </div>
 </cart-drawer>
+
+<style>
+  div#CartDrawer {
+    padding: 10px;
+}
+div#CartDrawer .drawer__inner {
+    border-radius: 10px;
+    width: 520px;
+    padding: 0;
+    background: #FFFEFE;
+}
+.drawer__footer {
+    background: #FFFFFC;
+    border-top: 1px solid #EAECF0;
+    box-shadow: 0px -8px 30px rgba(45, 38, 34, 0.07);
+    border-radius: 12px 12px 0px 0px;
+    padding-inline: 15px;
+}
+.drawer__header {
+    padding-inline: 20px;
+}
+span.cart_count {
+    background: #F0E9E0;
+    font-size: 14px;
+    margin-left: 20px;
+    padding: 2px 10px;
+    border-radius: 100px;
+}
+
+h2.drawer__heading {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    margin: 0;
+}
+
+button.drawer__close {
+    background: #F9FAFB;
+    border-radius: 100px;
+    min-width: max-content;
+    min-height: max-content;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 10px;
+    top: 15px;
+}
+
+button.drawer__close svg {
+    width: 11px;
+    color: black;
+}
+{% comment %} timer {% endcomment %}
+.time_block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F5ED94;
+    color: #1A1A1A;
+    gap: 5px;
+    padding-block: 4px;
+    font-size: 14px;
+    font-weight: 600 !important;
+}
+
+.time_block img {
+    width: 14px;
+}
+
+span.timer_block {
+    color: #F04438;
+}
+{% comment %} shipping bar {% endcomment %}
+ .free_shipping_wrapper {
+    max-width: 80%;
+    width: 100%;
+    margin-inline: auto;
+    font-size: 14px;
+    font-weight: 600 !important;
+    text-align: center;
+    padding-top: 8px;
+    color: #1A1A1A;
+}
+
+.free_shipping_bar {
+    height: 10px;
+    width: 100%;
+    background: #F6F1EC;
+    margin-block: 7px 15px;
+    border-radius: 100px;
+    position: relative;
+}
+
+.free_shipping_progress_line {
+    display: block !important;
+    height: 100%;
+    width: 66%;
+    background: #1A1A1A;
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 100px;
+}
+
+.free_shipping_dot_progress {
+    display: block !important;
+    height: 16px;
+    width: 16px;
+    background: #1A1A1A;
+    position: absolute;
+    left: 66%;
+    right: 0;
+    border-radius: 100px;
+    border: 2px solid white;
+    top: -3px;
+    transform: translateX(-50%);
+}
+{% comment %} cart items {% endcomment %}
+cart-drawer-items {
+    padding-inline: 12px;
+}
+
+tr.cart-item {
+    padding: 12px;
+    border: 1px solid #EAECF0;
+    border-radius: 10px;
+    position: relative;
+    gap: 0;
+    margin-bottom: 10px !important;
+}
+td.cart-item__totals {
+    position: absolute;
+    bottom: auto;
+    right: 10px;
+    top: 8rem;
+}
+.cart-drawer .cart-items td {
+    padding: 0;
+}
+
+.cart-drawer .cart-item__error {
+    margin: 0;
+}
+.cart-item__name {
+    font-size: 16px;
+    font-family: 'Alliance';
+    text-decoration: none !important;
+    font-weight: 600;
+    text-transform: math-auto;
+    letter-spacing: normal;
+}
+button.quantity__button {
+    width: 32px;
+    height: auto;
+}
+
+quantity-input.quantity.cart-quantity {
+    height: auto;
+}
+
+input.quantity__input {
+    height: auto;
+    width: 32px;
+    font-size: 13px;
+}
+
+quantity-input.quantity.cart-quantity {
+    width: auto;
+    max-width: none;
+    min-width: auto;
+    height: auto;
+    min-height: 32px;
+    border: 1px solid #EAECF0;
+    border-radius: 10px;
+}
+
+.quantity:before, .quantity:after {
+    display: none;
+}
+
+cart-remove-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+quantity-popover {
+    position: static;
+}
+img.cart-item__image {
+    border-radius: 10px;
+}
+.cart-item__discounted-prices {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+}
+.product-option {
+    font-size: 12px;
+    line-height: 1;
+}
+
+.cart-drawer .price {
+    font-weight: 700;
+}
+.cart-item__discounted-prices span.price.price--end {
+    color: #1A1A1A;
+}
+button#CartDrawer-Checkout {
+    display: flex;
+    gap: 7px;
+    font-weight: 700;
+}
+{% comment %} //////////////// {% endcomment %}
+.three-icon-text.cart_icons {
+    background: #F8F5F2;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    padding: 6px;
+}
+
+.three-icon-text.cart_icons .text-icon-block {
+    padding-right: 10px;
+    margin: 0;
+}
+
+.three-icon-text.cart_icons .text-content {
+    font-size: 10px;
+    font-weight: 600;
+    color: #1D211E;
+}
+
+.three-icon-text.cart_icons img {
+    width: 12px;
+}
+{% comment %} /////////////// {% endcomment %}
+.footer__payment.cart_payment ul.list.list-payment {
+    justify-content: center;
+}
+
+.total_calculations {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.cart_total_compare_price_minus_price_savings_percentage {
+  color: #141414;
+  font-weight: 600;
+  font-size: 11px;
+  background: #F4EC8D;
+  padding: 4px 6px;
+  border-radius: 100px;
+}
+
+.cart_total_compare_price {
+  color: #AFA8A0;
+  font-size: 14px;
+}
+
+.totals__total-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin: 0;
+}
+cart-drawer__footer * {
+    font-weight: 600;
+    letter-spacing: normal;
+}
+h2.totals__total {
+    font-family: 'Alliance';
+}
+.shipping_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+.shipping_box img {
+    width: 16px;
+}
+
+.shipp_text {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.totals {
+    margin-bottom: 13px;
+}
+
+div#CartDrawer_box {
+    height: 100%;
+    max-height: 100%;
+}
+td.upsell_incart {
+    grid-row-start: 3;
+    grid-column-end: -1;
+    grid-column-start: 1;
+    padding: 0 !important;
+}
+
+.free_line_item_gift {
+    padding: 10px;
+    background: #FDFBE6;
+    border-radius: 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px dashed #8C8C8C;
+        margin-bottom: 5px;
+        line-height: 1;
+}
+.free_line_item_gift_content span {
+    font-size: 10px;
+}
+.free_line_item_gift_content {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.price_free_gift s {
+    color: #AFA8A0;
+}
+@media (max-width: 700px){
+  div#CartDrawer {
+    padding: 0;
+}
+
+div#CartDrawer .drawer__inner {
+    max-width: calc(100vw - 1rem);
+}
+
+.cart-item__name {
+    font-size: 14px;
+}
+
+.shipping_box {
+    font-size: 14px;
+}
+
+h2.totals__total {
+    font-size: 13px;
+}
+
+.cart_total_compare_price_minus_price_savings_percentage {
+    font-size: 9px;
+}
+
+span.cart_total_compare_price {
+    font-size: 12px;
+}
+
+.totals__total-value {
+    font-size: 13px;
+}
+
+.total_calculations {
+    margin: 0;
+}
+
+h2.totals__total {
+    margin: 0;
+}
+}
+
+
+
+</style>
+
+<script>
+(function() {
+  let timeLeft = -1;
+  let countdown;
+
+  function clearCart() {
+    fetch('/cart/clear.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(() => {
+      window.location.reload();
+    })
+    .catch(err => console.error("Failed to clear cart:", err));
+  }
+
+  function updateTimer() {
+    const timerEl = document.querySelector('.timer_block');
+    if (!timerEl) return;
+
+    if (timeLeft < 0) {
+      timeLeft = parseInt(timerEl.getAttribute('data-time-seconds')) || 600; // default 10 min
+    }
+
+    const m = Math.floor(timeLeft / 60);
+    const s = timeLeft % 60;
+    const timeString = m + ':' + (s < 10 ? '0' + s : s);
+
+    timerEl.textContent = timeString;
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      timerEl.textContent = 'Expired';
+      clearCart();
+    }
+
+    timeLeft--;
+  }
+
+  // Initial start
+  updateTimer();
+  countdown = setInterval(updateTimer, 1000);
+
+  // Reset timer when product is added via AJAX
+  document.addEventListener('product-ajax:added', () => {
+    timeLeft = -1;
+    updateTimer();
+  });
+})();
+</script>
